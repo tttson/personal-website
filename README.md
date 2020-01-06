@@ -3,6 +3,7 @@
 ## Getting Started
 1. To view your local version of this project, please open **index.html** in Google Chrome
 2. Additional packages installed details, explanation
+3. need to run seed file by executing `npm run seed`
 
 
 ## Database Tables - starting point schema:

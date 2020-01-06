@@ -1,28 +1,18 @@
-'use strict';
-
-const webpack = require('webpack'); // eslint-disable-line no-unused-vars
-
 module.exports = {
-  entry: './src/index.js',
+  entry: ['babel-polyfill', './src/index.js'],
   output: {
     path: __dirname,
-    filename: './public/js/bundle.js',
+    filename: './public/bundle.js',
   },
   context: __dirname,
   devtool: 'source-map',
   module: {
-    loaders: [
+    rules: [
       {
-        test: /jsx?$/,
-        exclude: /(node_modules|bower_components)/,
-        loader: 'babel-loader',
-        query: {
-          presets: ['react', 'es2015', 'stage-2'],
-        }
+        test: /\.jsx?$/,
+        exclude: /node_modules/,
+        loader: 'babel-loader'
       }
     ]
-  },
-  node: {
-    fs: "empty"
   }
-};
+}
