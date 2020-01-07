@@ -32,7 +32,13 @@ router.get('/orders', (req,res,next)=>{
   //   }
   // })
 
-  db.all('SELECT * FROM orders JOIN users ON users.id = orders.user_id JOIN order_items ON orders.id = order_items.order_id',
+
+
+
+  //lists out all the item names in order
+  // 'WITH query1 AS (SELECT users.name AS user_name, user_id, orders.id AS order_no FROM orders JOIN users ON users.id = orders.user_id), query2 AS (SELECT * FROM query1 JOIN order_items ON order_items.order_id  = query1.order_no) SELECT user_name, user_id, order_no, item_id, items.name FROM query2 JOIN items ON items.id = query2.item_id ORDER BY order_no ASC',
+
+  db.all('WITH query1 AS (SELECT users.name AS user_name, user_id, orders.id AS order_no FROM orders JOIN users ON users.id = orders.user_id), query2 AS (SELECT * FROM query1 JOIN order_items ON order_items.order_id  = query1.order_no) SELECT user_name, user_id, order_no, COUNT(items.name) AS item_count FROM query2 JOIN items ON items.id = query2.item_id GROUP BY order_no ORDER BY user_id ASC',
   (error, orders) => {
     if(error){
       next(error)

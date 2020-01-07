@@ -10,11 +10,11 @@ function seedOrdersDatabase(done) {
                    'FOREIGN KEY(`user_id`) REFERENCES `users`(`id`) )');
     db.run('DROP TABLE IF EXISTS order_items');
     db.run('CREATE TABLE IF NOT EXISTS `order_items` ( ' +
-                      '`order_id` INTEGER NOT NULL, ' +
-                      '`item_id` INTEGER NOT NULL, ' +
-                      'FOREIGN KEY(`order_id`) REFERENCES `orders`(`id`), ' +
-                      'FOREIGN KEY(`item_id`) REFERENCES `items`(`id`), ' +
-                      'PRIMARY KEY(`order_id`, `item_id`) )');
+                    '`order_id` INTEGER NOT NULL, ' +
+                    '`item_id` INTEGER NOT NULL, ' +
+                    'FOREIGN KEY(`order_id`) REFERENCES `orders`(`id`), ' +
+                    'FOREIGN KEY(`item_id`) REFERENCES `items`(`id`), ' +
+                    'PRIMARY KEY(`order_id`, `item_id`) )');
   });
 }
 seedOrdersDatabase(() => {})
