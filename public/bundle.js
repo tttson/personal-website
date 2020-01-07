@@ -1529,7 +1529,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 
 var bind = __webpack_require__(229);
-var isBuffer = __webpack_require__(572);
+var isBuffer = __webpack_require__(570);
 
 /*global toString:true*/
 
@@ -10977,7 +10977,7 @@ var matchPath = function matchPath(pathname) {
 /* WEBPACK VAR INJECTION */(function(process) {
 
 var utils = __webpack_require__(29);
-var normalizeHeaderName = __webpack_require__(574);
+var normalizeHeaderName = __webpack_require__(572);
 
 var DEFAULT_CONTENT_TYPE = {
   'Content-Type': 'application/x-www-form-urlencoded'
@@ -16633,10 +16633,10 @@ module.exports = function bind(fn, thisArg) {
 
 
 var utils = __webpack_require__(29);
-var settle = __webpack_require__(575);
-var buildURL = __webpack_require__(577);
-var parseHeaders = __webpack_require__(578);
-var isURLSameOrigin = __webpack_require__(579);
+var settle = __webpack_require__(573);
+var buildURL = __webpack_require__(575);
+var parseHeaders = __webpack_require__(576);
+var isURLSameOrigin = __webpack_require__(577);
 var createError = __webpack_require__(231);
 
 module.exports = function xhrAdapter(config) {
@@ -16717,7 +16717,7 @@ module.exports = function xhrAdapter(config) {
     // This is only done if running in a standard browser environment.
     // Specifically not if we're in a web worker, or react-native.
     if (utils.isStandardBrowserEnv()) {
-      var cookies = __webpack_require__(580);
+      var cookies = __webpack_require__(578);
 
       // Add xsrf header
       var xsrfValue = (config.withCredentials || isURLSameOrigin(config.url)) && config.xsrfCookieName ?
@@ -16801,7 +16801,7 @@ module.exports = function xhrAdapter(config) {
 "use strict";
 
 
-var enhanceError = __webpack_require__(576);
+var enhanceError = __webpack_require__(574);
 
 /**
  * Create an Error with the specified message, config, error code, request and response.
@@ -34753,15 +34753,15 @@ var _Landing = __webpack_require__(566);
 
 var _Landing2 = _interopRequireDefault(_Landing);
 
-var _Nav = __webpack_require__(588);
+var _Nav = __webpack_require__(589);
 
 var _Nav2 = _interopRequireDefault(_Nav);
 
-var _UpdateOrders = __webpack_require__(589);
+var _UpdateOrders = __webpack_require__(590);
 
 var _UpdateOrders2 = _interopRequireDefault(_UpdateOrders);
 
-var _CreateOrder = __webpack_require__(590);
+var _CreateOrder = __webpack_require__(591);
 
 var _CreateOrder2 = _interopRequireDefault(_CreateOrder);
 
@@ -36069,17 +36069,21 @@ var _react = __webpack_require__(16);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _SingleTable = __webpack_require__(567);
-
-var _SingleTable2 = _interopRequireDefault(_SingleTable);
-
-var _QuickAccess = __webpack_require__(569);
+var _QuickAccess = __webpack_require__(567);
 
 var _QuickAccess2 = _interopRequireDefault(_QuickAccess);
 
-var _axios = __webpack_require__(570);
+var _axios = __webpack_require__(568);
 
 var _axios2 = _interopRequireDefault(_axios);
+
+var _UserOrder = __webpack_require__(586);
+
+var _UserOrder2 = _interopRequireDefault(_UserOrder);
+
+var _LandingTable = __webpack_require__(587);
+
+var _LandingTable2 = _interopRequireDefault(_LandingTable);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -36102,7 +36106,7 @@ var Landing = function (_Component) {
     var _this = _possibleConstructorReturn(this, (Landing.__proto__ || Object.getPrototypeOf(Landing)).call(this, props));
 
     _this.selectOrder = function () {
-      var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(orderId) {
+      var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(userId) {
         var res;
         return regeneratorRuntime.wrap(function _callee$(_context) {
           while (1) {
@@ -36110,7 +36114,7 @@ var Landing = function (_Component) {
               case 0:
                 _context.prev = 0;
                 _context.next = 3;
-                return _axios2.default.get('/api/customers/' + orderId);
+                return _axios2.default.get('/api/customers/' + userId + '/orders');
 
               case 3:
                 res = _context.sent;
@@ -36141,7 +36145,8 @@ var Landing = function (_Component) {
     }();
 
     _this.state = {
-      orders: []
+      orders: [],
+      selectedOrder: {}
     };
     return _this;
   }
@@ -36203,8 +36208,16 @@ var Landing = function (_Component) {
         { className: 'main' },
         _react2.default.createElement(
           'section',
-          { className: 'singletable' },
-          _react2.default.createElement(_SingleTable2.default, { orders: this.state.orders })
+          { className: 'quickaccess' },
+          _react2.default.createElement(_QuickAccess2.default, null),
+          _react2.default.createElement(_QuickAccess2.default, null),
+          _react2.default.createElement(_QuickAccess2.default, null),
+          _react2.default.createElement(_QuickAccess2.default, null)
+        ),
+        _react2.default.createElement(
+          'section',
+          { className: 'landingtable' },
+          this.state.selectedOrder.id ? _react2.default.createElement(_UserOrder2.default, { userorder: this.state.selectedOrder }) : _react2.default.createElement(_LandingTable2.default, { orders: this.state.orders, selectOrder: this.selectOrder })
         )
       );
     }
@@ -36230,121 +36243,6 @@ var _react = __webpack_require__(16);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _OrderRow = __webpack_require__(568);
-
-var _OrderRow2 = _interopRequireDefault(_OrderRow);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var SingleTable = function SingleTable(props) {
-  var allorders = props.orders;
-  console.log('what is in singletable', props.orders);
-  // const selectOrder = props.selectOrder
-  return _react2.default.createElement(
-    'table',
-    null,
-    _react2.default.createElement(
-      'tbody',
-      null,
-      _react2.default.createElement(
-        'tr',
-        null,
-        _react2.default.createElement(
-          'th',
-          null,
-          'Customer Name'
-        ),
-        _react2.default.createElement(
-          'th',
-          null,
-          'Customer ID'
-        ),
-        _react2.default.createElement(
-          'th',
-          null,
-          'Order No.'
-        ),
-        _react2.default.createElement(
-          'th',
-          null,
-          'Item Count'
-        )
-      ),
-      allorders.map(function (eaOrder) {
-        return _react2.default.createElement(_OrderRow2.default, { rows: eaOrder });
-      })
-    )
-  );
-};
-
-exports.default = SingleTable;
-
-/***/ }),
-/* 568 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _react = __webpack_require__(16);
-
-var _react2 = _interopRequireDefault(_react);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var OrderRow = function OrderRow(props) {
-  var eaOrder = props.rows;
-  console.log('from OrderRows', props.rows);
-  return (
-    // <tr onClick= {()=> selectOrder(eaOrder.order_no)}>
-    _react2.default.createElement(
-      'tr',
-      null,
-      _react2.default.createElement(
-        'td',
-        null,
-        eaOrder.user_name
-      ),
-      _react2.default.createElement(
-        'td',
-        null,
-        eaOrder.user_id
-      ),
-      _react2.default.createElement(
-        'td',
-        null,
-        eaOrder.order_no
-      ),
-      _react2.default.createElement(
-        'td',
-        null,
-        eaOrder.item_count
-      )
-    )
-  );
-};
-
-exports.default = OrderRow;
-
-/***/ }),
-/* 569 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _react = __webpack_require__(16);
-
-var _react2 = _interopRequireDefault(_react);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var QuickAccess = function QuickAccess() {
@@ -36354,13 +36252,13 @@ var QuickAccess = function QuickAccess() {
 exports.default = QuickAccess;
 
 /***/ }),
-/* 570 */
+/* 568 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(571);
+module.exports = __webpack_require__(569);
 
 /***/ }),
-/* 571 */
+/* 569 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -36368,7 +36266,7 @@ module.exports = __webpack_require__(571);
 
 var utils = __webpack_require__(29);
 var bind = __webpack_require__(229);
-var Axios = __webpack_require__(573);
+var Axios = __webpack_require__(571);
 var defaults = __webpack_require__(152);
 
 /**
@@ -36403,14 +36301,14 @@ axios.create = function create(instanceConfig) {
 
 // Expose Cancel & CancelToken
 axios.Cancel = __webpack_require__(233);
-axios.CancelToken = __webpack_require__(586);
+axios.CancelToken = __webpack_require__(584);
 axios.isCancel = __webpack_require__(232);
 
 // Expose all/spread
 axios.all = function all(promises) {
   return Promise.all(promises);
 };
-axios.spread = __webpack_require__(587);
+axios.spread = __webpack_require__(585);
 
 module.exports = axios;
 
@@ -36419,7 +36317,7 @@ module.exports.default = axios;
 
 
 /***/ }),
-/* 572 */
+/* 570 */
 /***/ (function(module, exports) {
 
 /*!
@@ -36436,7 +36334,7 @@ module.exports = function isBuffer (obj) {
 
 
 /***/ }),
-/* 573 */
+/* 571 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -36444,8 +36342,8 @@ module.exports = function isBuffer (obj) {
 
 var defaults = __webpack_require__(152);
 var utils = __webpack_require__(29);
-var InterceptorManager = __webpack_require__(581);
-var dispatchRequest = __webpack_require__(582);
+var InterceptorManager = __webpack_require__(579);
+var dispatchRequest = __webpack_require__(580);
 
 /**
  * Create a new instance of Axios
@@ -36522,7 +36420,7 @@ module.exports = Axios;
 
 
 /***/ }),
-/* 574 */
+/* 572 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -36541,7 +36439,7 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
 
 
 /***/ }),
-/* 575 */
+/* 573 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -36574,7 +36472,7 @@ module.exports = function settle(resolve, reject, response) {
 
 
 /***/ }),
-/* 576 */
+/* 574 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -36602,7 +36500,7 @@ module.exports = function enhanceError(error, config, code, request, response) {
 
 
 /***/ }),
-/* 577 */
+/* 575 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -36675,7 +36573,7 @@ module.exports = function buildURL(url, params, paramsSerializer) {
 
 
 /***/ }),
-/* 578 */
+/* 576 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -36735,7 +36633,7 @@ module.exports = function parseHeaders(headers) {
 
 
 /***/ }),
-/* 579 */
+/* 577 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -36810,7 +36708,7 @@ module.exports = (
 
 
 /***/ }),
-/* 580 */
+/* 578 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -36870,7 +36768,7 @@ module.exports = (
 
 
 /***/ }),
-/* 581 */
+/* 579 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -36929,18 +36827,18 @@ module.exports = InterceptorManager;
 
 
 /***/ }),
-/* 582 */
+/* 580 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 var utils = __webpack_require__(29);
-var transformData = __webpack_require__(583);
+var transformData = __webpack_require__(581);
 var isCancel = __webpack_require__(232);
 var defaults = __webpack_require__(152);
-var isAbsoluteURL = __webpack_require__(584);
-var combineURLs = __webpack_require__(585);
+var isAbsoluteURL = __webpack_require__(582);
+var combineURLs = __webpack_require__(583);
 
 /**
  * Throws a `Cancel` if cancellation has been requested.
@@ -37022,7 +36920,7 @@ module.exports = function dispatchRequest(config) {
 
 
 /***/ }),
-/* 583 */
+/* 581 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -37049,7 +36947,7 @@ module.exports = function transformData(data, headers, fns) {
 
 
 /***/ }),
-/* 584 */
+/* 582 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -37070,7 +36968,7 @@ module.exports = function isAbsoluteURL(url) {
 
 
 /***/ }),
-/* 585 */
+/* 583 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -37091,7 +36989,7 @@ module.exports = function combineURLs(baseURL, relativeURL) {
 
 
 /***/ }),
-/* 586 */
+/* 584 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -37155,7 +37053,7 @@ module.exports = CancelToken;
 
 
 /***/ }),
-/* 587 */
+/* 585 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -37189,7 +37087,188 @@ module.exports = function spread(callback) {
 
 
 /***/ }),
+/* 586 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(16);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var UserOrder = function UserOrder(props) {
+  var eaOrder = props.rows;
+  console.log('from OrderRows', props.rows);
+  var allorders = props.orders;
+  var selectOrder = props.selectOrder;
+  return _react2.default.createElement(
+    'table',
+    null,
+    _react2.default.createElement(
+      'tbody',
+      null,
+      _react2.default.createElement(
+        'tr',
+        null,
+        _react2.default.createElement(
+          'th',
+          null,
+          'Customer ID'
+        ),
+        _react2.default.createElement(
+          'th',
+          null,
+          'Customer Name'
+        ),
+        _react2.default.createElement(
+          'th',
+          null,
+          'Order No.'
+        ),
+        _react2.default.createElement(
+          'th',
+          null,
+          'Product ID'
+        ),
+        _react2.default.createElement(
+          'th',
+          null,
+          'Product Name'
+        )
+      ),
+      allorders.map(function (eaOrder) {
+        return _react2.default.createElement(OrderRow, { rows: eaOrder, selectOrder: selectOrder });
+      })
+    )
+  );
+};
+
+exports.default = UserOrder;
+
+/***/ }),
+/* 587 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(16);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _OrderRow = __webpack_require__(588);
+
+var _OrderRow2 = _interopRequireDefault(_OrderRow);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var LandingTable = function LandingTable(props) {
+  console.log('landingtable', props);
+  var allorders = props.orders;
+  var selectOrder = props.selectOrder;
+  return _react2.default.createElement(
+    'table',
+    null,
+    _react2.default.createElement(
+      'tbody',
+      null,
+      _react2.default.createElement(
+        'tr',
+        null,
+        _react2.default.createElement(
+          'th',
+          null,
+          'Customer Name'
+        ),
+        _react2.default.createElement(
+          'th',
+          null,
+          'Customer ID'
+        ),
+        _react2.default.createElement(
+          'th',
+          null,
+          'Order No.'
+        ),
+        _react2.default.createElement(
+          'th',
+          null,
+          'Item Count'
+        )
+      ),
+      allorders.map(function (eaOrder) {
+        return _react2.default.createElement(_OrderRow2.default, { rows: eaOrder, selectOrder: selectOrder });
+      })
+    )
+  );
+};
+
+exports.default = LandingTable;
+
+/***/ }),
 /* 588 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(16);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var OrderRow = function OrderRow(props) {
+  var eaOrder = props.rows;
+  var selectOrder = props.selectOrder;
+  console.log('from OrderRows', props);
+  return _react2.default.createElement(
+    'tr',
+    { onClick: function onClick() {
+        return selectOrder(eaOrder.user_id);
+      } },
+    _react2.default.createElement(
+      'td',
+      null,
+      eaOrder.user_name
+    ),
+    _react2.default.createElement(
+      'td',
+      null,
+      eaOrder.user_id
+    ),
+    _react2.default.createElement(
+      'td',
+      null,
+      eaOrder.order_no
+    ),
+    _react2.default.createElement(
+      'td',
+      null,
+      eaOrder.item_count
+    )
+  );
+};
+
+exports.default = OrderRow;
+
+/***/ }),
+/* 589 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -37244,14 +37323,14 @@ var Navbar = function Navbar() {
 exports.default = Navbar;
 
 /***/ }),
-/* 589 */
+/* 590 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 /***/ }),
-/* 590 */
+/* 591 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";

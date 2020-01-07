@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
-import SingleTable from './SingleTable'
 import QuickAccess from './QuickAccess';
 import axios from 'axios'
+import UserOrder from './UserOrder';
+import LandingTable from './LandingTable';
 
 class Landing extends Component {
     constructor(props){
     super(props)
     this.state = {
-      orders: []
+      orders: [],
+      selectedOrder: {}
     }
   }
   async componentDidMount() {
@@ -22,9 +24,9 @@ class Landing extends Component {
     }
   }
 
-  selectOrder = async (orderId) => {
+  selectOrder = async (userId) => {
     try {
-      const res = await axios.get(`/api/customers/${orderId}`)
+      const res = await axios.get(`/api/customers/${userId}/orders`)
       this.setState({
         selectedOrder: res.data
       })
@@ -40,14 +42,18 @@ class Landing extends Component {
     console.log('what is in my state in Landing', this.state.orders)
     return (
       <div className='main'>
-          {/* <section className='quickaccess'>
+          <section className='quickaccess'>
               <QuickAccess/>
               <QuickAccess/>
               <QuickAccess/>
               <QuickAccess/>
-          </section> */}
-          <section className='singletable'>
-              <SingleTable orders={this.state.orders}/>
+          </section>
+          <section className='landingtable'>
+          {
+              this.state.selectedOrder.id ?
+              <UserOrder userorder={this.state.selectedOrder}/> :
+              <LandingTable orders={this.state.orders} selectOrder={this.selectOrder}/>
+          }
           </section>
       </div>
     )

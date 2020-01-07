@@ -1,22 +1,23 @@
 import React, {Component} from 'react'
-import OrderRow from './OrderRow'
 
-const SingleTable = (props) => {
+const UserOrder = (props) => {
+  const eaOrder = props.rows
+console.log('from OrderRows', props.rows)
     const allorders = props.orders
-    console.log('what is in singletable', props.orders)
-    // const selectOrder = props.selectOrder
+    const selectOrder = props.selectOrder
     return (
         <table>
           <tbody>
             <tr>
-              <th>Customer Name</th>
               <th>Customer ID</th>
+              <th>Customer Name</th>
               <th>Order No.</th>
-              <th>Item Count</th>
+              <th>Product ID</th>
+              <th>Product Name</th>
             </tr>
               {
               allorders.map(eaOrder => (
-                <OrderRow rows={eaOrder} />
+                <OrderRow rows={eaOrder} selectOrder={selectOrder}/>
               ))
               }
           </tbody>
@@ -24,4 +25,6 @@ const SingleTable = (props) => {
     )
 }
 
-export default SingleTable
+export default UserOrder
+
+
