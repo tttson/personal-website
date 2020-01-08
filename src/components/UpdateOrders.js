@@ -87,10 +87,17 @@ class UpdateOrders extends Component {
   }
 
   submitUpdatedOrder = async ()=> {
-    let updatedOrder =  this.itemNumsOnly(this.state.orders)
-    // then we need to compare it to  the original order and send the changes to the  backend
-    //split thechanges into  2 lists, to add and to delete
-    const res = await axios.put(`/api/orders/${this.state.id}`, this.state)
+    let newlyAdded
+    let newlyRemoved
+    if (this.state.added.length > 0) {
+      newlyAdded = this.state.added
+    }
+    if (this.state.removed.length > 0) {
+      newlyRemoved = this.state.removed
+    }
+    let updates = { add: newlyAdded, remove: newlyRemoved}
+    // let test = {msg: 'this is a test'}
+    const res = await axios.put(`/api/orders/${this.state.id}`,updates)
     this.setState({
       orderupdated: res.data
     })
@@ -129,6 +136,7 @@ class UpdateOrders extends Component {
             }
           </tbody>
       </table>
+      <button onClick = {() => this.submitUpdatedOrder()}>SUBMIT FINAL ORDER</button>
       </div>
 
 
