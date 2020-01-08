@@ -110,6 +110,7 @@ let orderID = req.params.orderID
 
 //this deletes the entire order
 router.delete('/:orderID', (req,res,next)=> {
+  console.log('hitting the delete route!!!')
   const sql = 'DELETE FROM orders WHERE orders.id = $orderID'
   const values = {$orderID: req.params.orderID}
   db.run(sql, values, (error) => {

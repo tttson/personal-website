@@ -72,9 +72,9 @@ class UpdateOrders extends Component {
     }
     let filtered = []
     let currOrder = this.itemNumsOnly(allOrders.orders)
-    for (let itemName in items){
-      if(!currOrder.includes(items[itemName])){
-        filtered.push({item_name: itemName, item_id: items[itemName]})
+    for (let itemName in itemID){
+      if(!currOrder.includes(itemID[itemName])){
+        filtered.push({item_name: itemName, item_id: itemID[itemName]})
       }
     }
     allOrders.orders.concat(filtered).forEach((order,i)=> order.rowId =  i+1)
@@ -137,7 +137,12 @@ let newlyRemoved
     console.log('SUCCESS WE ADDED IN PUT ROUTE')
   }
 
-  deleteOrder = ()  => {
+  submitDeleteOrder = async ()  => {
+    const res = await axios.delete(`/api/orders/${this.state.id}`)
+    this.setState({
+      orders: [],
+      orderupdated: this.state.id
+    })
 
   }
 
@@ -162,7 +167,7 @@ let newlyRemoved
 
       <div>
       <button onClick = {() => this.submitUpdatedOrder()}>SUBMIT UPDATED ORDER</button>
-      <button onClick = {() => this.deleteOrder()}>DELETE ENTIRE ORDER</button>
+      <button onClick = {() => this.submitDeleteOrder()}>DELETE ENTIRE ORDER</button>
       </div>
 
       {this.state.orderupdated.id? <Confirmation action='updated' orderId={this.state.orderupdated.id}/> : null}
