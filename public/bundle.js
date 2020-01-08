@@ -37553,15 +37553,17 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _react = __webpack_require__(9);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _CreateOrder = __webpack_require__(235);
+var _Checkbox = __webpack_require__(593);
 
-var _CreateOrder2 = _interopRequireDefault(_CreateOrder);
+var _Checkbox2 = _interopRequireDefault(_Checkbox);
 
 var _Confirmation = __webpack_require__(237);
 
@@ -37581,17 +37583,30 @@ var _axios2 = _interopRequireDefault(_axios);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var PRODUCTS = ['Banana', 'Apples', 'Lettuce', 'Milk', 'Soda', 'Cereal', 'Chips', 'Eggs', 'Bread', 'Carrots'];
+
+var itemID = {
+  'Banana': 1,
+  'Apples': 2,
+  'Lettuce': 3,
+  'Milk': 4,
+  'Soda': 5,
+  'Cereal': 6,
+  'Chips': 7,
+  'Eggs': 8,
+  'Bread': 9,
+  'Carrots': 10
+};
 
 var UpdateOrders = function (_Component) {
   _inherits(UpdateOrders, _Component);
@@ -37603,9 +37618,20 @@ var UpdateOrders = function (_Component) {
 
     var _this = _possibleConstructorReturn(this, (UpdateOrders.__proto__ || Object.getPrototypeOf(UpdateOrders)).call(this, props));
 
+    _this.handleChange = function (event) {
+      var name = event.target.name;
+
+      _this.setState(function (prevState) {
+        return {
+          checkboxes: _extends({}, prevState.checkboxes, _defineProperty({}, name, !prevState.checkboxes[name]))
+        };
+      });
+      console.log('checkbox changes', _this.state.checkboxes);
+    };
+
     _this.getOrderId = function () {
       var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(event) {
-        var res, allOrders;
+        var res, allOrders, items, filtered, currOrder, itemName;
         return regeneratorRuntime.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
@@ -37617,16 +37643,36 @@ var UpdateOrders = function (_Component) {
               case 3:
                 res = _context.sent;
                 allOrders = res.data;
+                items = {
+                  'Banana': 1,
+                  'Apples': 2,
+                  'Lettuce': 3,
+                  'Milk': 4,
+                  'Soda': 5,
+                  'Cereal': 6,
+                  'Chips': 7,
+                  'Eggs': 8,
+                  'Bread': 9,
+                  'Carrots': 10
+                };
+                filtered = [];
+                currOrder = _this.itemNumsOnly(allOrders.orders);
 
-                allOrders.orders.forEach(function (order, i) {
+                for (itemName in items) {
+                  if (!currOrder.includes(items[itemName])) {
+                    filtered.push({ item_name: itemName, item_id: items[itemName] });
+                  }
+                }
+                allOrders.orders.concat(filtered).forEach(function (order, i) {
                   return order.rowId = i + 1;
                 });
                 _this.setState({
-                  orders: allOrders.orders
+                  orders: allOrders.orders,
+                  itemsNotInOrder: filtered
                 });
                 console.log('id set to state', _this.state);
 
-              case 8:
+              case 12:
               case 'end':
                 return _context.stop();
             }
@@ -37694,34 +37740,41 @@ var UpdateOrders = function (_Component) {
     };
 
     _this.submitUpdatedOrder = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3() {
-      var newlyAdded, newlyRemoved, updates, res;
+      var orderitems, info, newlyRemoved, updates, res;
       return regeneratorRuntime.wrap(function _callee3$(_context3) {
         while (1) {
           switch (_context3.prev = _context3.next) {
             case 0:
-              newlyAdded = void 0;
+              event.preventDefault();
+              orderitems = [];
+
+              Object.keys(_this.state.checkboxes).filter(function (checkbox) {
+                return _this.state.checkboxes[checkbox];
+              }).forEach(function (checkbox) {
+                orderitems.push(itemID[checkbox]);
+                console.log(orderitems, 'in cart');
+              });
+              info = { items: orderitems, removed: _this.state.removed };
+
+              console.log('added items to order', orderitems);
               newlyRemoved = void 0;
 
-              if (_this.state.added.length > 0) {
-                newlyAdded = _this.state.added;
-              }
               if (_this.state.removed.length > 0) {
                 newlyRemoved = _this.state.removed;
               }
-              updates = { add: newlyAdded, remove: newlyRemoved
-                // let test = {msg: 'this is a test'}
-              };
-              _context3.next = 7;
+              updates = { add: orderitems, remove: newlyRemoved };
+              _context3.next = 10;
               return _axios2.default.put('/api/orders/' + _this.state.id, updates);
 
-            case 7:
+            case 10:
               res = _context3.sent;
 
               _this.setState({
                 orderupdated: res.data
               });
+              console.log('SUCCESS WE ADDED IN PUT ROUTE');
 
-            case 9:
+            case 13:
             case 'end':
               return _context3.stop();
           }
@@ -37729,81 +37782,29 @@ var UpdateOrders = function (_Component) {
       }, _callee3, _this2);
     }));
 
+    _this.deleteOrder = function () {};
+
     _this.handleFormChange = function (event) {
       _this.setState(_defineProperty({}, event.target.name, event.target.value));
     };
 
     _this.state = {
-      products: [],
+      itemsNotInOrder: [],
       added: [],
       removed: [],
       orders: [],
       id: '',
-      orderupdated: {}
+      orderupdated: {},
+      checkboxes: PRODUCTS.reduce(function (options, option) {
+        return _extends({}, options, _defineProperty({}, option, false));
+      }, {})
     };
     return _this;
   }
+  //checkbox handleChange
+
 
   _createClass(UpdateOrders, [{
-    key: 'componentDidMount',
-    value: function () {
-      var _ref4 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee4() {
-        var res, allprod;
-        return regeneratorRuntime.wrap(function _callee4$(_context4) {
-          while (1) {
-            switch (_context4.prev = _context4.next) {
-              case 0:
-                _context4.prev = 0;
-                _context4.next = 3;
-                return _axios2.default.get('/api/products');
-
-              case 3:
-                res = _context4.sent;
-                allprod = res.data;
-
-                this.setState({
-                  products: allprod.products
-                });
-                _context4.next = 11;
-                break;
-
-              case 8:
-                _context4.prev = 8;
-                _context4.t0 = _context4['catch'](0);
-
-                console.log('Something went wrong in getting all orders!', _context4.t0);
-
-              case 11:
-              case 'end':
-                return _context4.stop();
-            }
-          }
-        }, _callee4, this, [[0, 8]]);
-      }));
-
-      function componentDidMount() {
-        return _ref4.apply(this, arguments);
-      }
-
-      return componentDidMount;
-    }()
-  }, {
-    key: 'addOrderItem',
-    value: function addOrderItem(item) {
-      this.state.added.push(item.id);
-      console.log('just added to my added list', this.state.added);
-      var id = this.counter() + 1;
-      var addOrderID = {
-        order_id: this.state.id,
-        item_id: item.id,
-        item_name: item.name,
-        rowId: id
-      };
-      this.setState({
-        orders: [].concat(_toConsumableArray(this.state.orders), [addOrderID])
-      });
-    }
-  }, {
     key: 'render',
     value: function render() {
       var _this3 = this;
@@ -37817,70 +37818,23 @@ var UpdateOrders = function (_Component) {
           { type: 'submit', onClick: this.getOrderId },
           'Submit Order ID'
         ),
-        this.state.orders.length ? _react2.default.createElement(_SingleOrderTable2.default, { orders: this.state.orders, products: this.state.products, deleteOrderItem: this.deleteOrderItem, addOrderItem: this.addOrderItem }) : null,
+        this.state.orders.length ? _react2.default.createElement(_SingleOrderTable2.default, { orders: this.state.orders, itemsNotInOrder: this.state.itemsNotInOrder, handleChange: this.handleChange, deleteOrderItem: this.deleteOrderItem, addOrderItem: this.addOrderItem }) : null,
         _react2.default.createElement(
           'div',
           null,
-          _react2.default.createElement(
-            'table',
-            null,
-            _react2.default.createElement(
-              'tbody',
-              null,
-              _react2.default.createElement(
-                'tr',
-                null,
-                _react2.default.createElement(
-                  'th',
-                  null,
-                  'Item ID'
-                ),
-                _react2.default.createElement(
-                  'th',
-                  null,
-                  'Item Name'
-                ),
-                _react2.default.createElement(
-                  'th',
-                  null,
-                  'Add Item'
-                )
-              ),
-              this.state.products.map(function (eaproduct) {
-                return _react2.default.createElement(
-                  'tr',
-                  null,
-                  _react2.default.createElement(
-                    'td',
-                    null,
-                    eaproduct.id
-                  ),
-                  _react2.default.createElement(
-                    'td',
-                    null,
-                    eaproduct.name
-                  ),
-                  _react2.default.createElement(
-                    'td',
-                    null,
-                    _react2.default.createElement(
-                      'button',
-                      { onClick: function onClick() {
-                          return _this3.addOrderItem(eaproduct);
-                        } },
-                      '+'
-                    )
-                  )
-                );
-              })
-            )
-          ),
           _react2.default.createElement(
             'button',
             { onClick: function onClick() {
                 return _this3.submitUpdatedOrder();
               } },
-            'SUBMIT FINAL ORDER'
+            'SUBMIT UPDATED ORDER'
+          ),
+          _react2.default.createElement(
+            'button',
+            { onClick: function onClick() {
+                return _this3.deleteOrder();
+              } },
+            'DELETE ENTIRE ORDER'
           )
         ),
         this.state.orderupdated.id ? _react2.default.createElement(_Confirmation2.default, { action: 'updated', orderId: this.state.orderupdated.id }) : null
@@ -37926,8 +37880,7 @@ var Checkbox = function Checkbox(_ref) {
         checked: isSelected,
         onChange: onCheckboxChange,
         className: "form-check-input"
-      }),
-      label
+      })
     )
   );
 };
@@ -37961,6 +37914,11 @@ var SingleOrderTable = function SingleOrderTable(props) {
   var deleteOrderItem = props.deleteOrderItem;
   var addOrderItem = props.addOrderItem;
   var products = props.products;
+  var createCheckboxes = props.createCheckboxes;
+  var itemsNotInOrder = props.itemsNotInOrder;
+  var handleChange = props.handleChange;
+  var combined = singleorder.concat(itemsNotInOrder);
+  console.log('single order table', props);
   return _react2.default.createElement(
     'div',
     null,
@@ -38000,14 +37958,20 @@ var SingleOrderTable = function SingleOrderTable(props) {
               'th',
               null,
               'Delete Item'
+            ),
+            _react2.default.createElement(
+              'th',
+              null,
+              'Add Item'
             )
           ),
-          singleorder.map(function (eaOrder, i) {
-            return _react2.default.createElement(_SingleOrderRow2.default, { key: i, rows: eaOrder, deleteOrderItem: deleteOrderItem });
+          combined.map(function (eaOrder, i) {
+            return _react2.default.createElement(_SingleOrderRow2.default, { handleChange: handleChange, key: i, rows: eaOrder, deleteOrderItem: deleteOrderItem });
           })
         )
       )
-    )
+    ),
+    _react2.default.createElement('div', null)
   );
 };
 
@@ -38028,12 +37992,17 @@ var _react = __webpack_require__(9);
 
 var _react2 = _interopRequireDefault(_react);
 
+var _Checkbox = __webpack_require__(593);
+
+var _Checkbox2 = _interopRequireDefault(_Checkbox);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var SingleOrderRow = function SingleOrderRow(props) {
   var eaOrder = props.rows;
   var deleteOrderItem = props.deleteOrderItem;
-  // console.log('from OrderRows', props)
+  var handleChange = props.handleChange;
+  console.log('from Single Order Rows', props);
   return (
     // <tr onClick = {() => deleteOrderItem(eaOrder.id)}>
     _react2.default.createElement(
@@ -38062,13 +38031,18 @@ var SingleOrderRow = function SingleOrderRow(props) {
       _react2.default.createElement(
         'td',
         null,
-        _react2.default.createElement(
+        eaOrder.order_id ? _react2.default.createElement(
           'button',
           { onClick: function onClick() {
               return deleteOrderItem(eaOrder.rowId, eaOrder.item_id);
             } },
           'X'
-        )
+        ) : null
+      ),
+      _react2.default.createElement(
+        'td',
+        null,
+        eaOrder.order_id ? null : _react2.default.createElement(_Checkbox2.default, { label: eaOrder.item_name, onCheckboxChange: handleChange })
       )
     )
   );

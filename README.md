@@ -1,7 +1,7 @@
 # Walmart Inhome
 
 ## Getting Started
-1. To view your local version of this project, please open **index.html** in Google Chrome
+1. To view your local version of this project, please open **index.html** in Google Chrome OR nom install, then npm run start
 2. Additional packages installed details, explanation
 3. need to run seed file by executing `npm run seed`
 

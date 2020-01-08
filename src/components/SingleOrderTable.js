@@ -7,6 +7,11 @@ const SingleOrderTable = (props) => {
     const deleteOrderItem = props.deleteOrderItem
     const addOrderItem = props.addOrderItem
     const products = props.products
+    const createCheckboxes = props.createCheckboxes
+    const itemsNotInOrder = props.itemsNotInOrder
+    const handleChange = props.handleChange
+    let combined = singleorder.concat(itemsNotInOrder)
+    console.log('single order table', props)
     return (
       <div>
         <div>
@@ -18,14 +23,17 @@ const SingleOrderTable = (props) => {
               <th>Item ID</th>
               <th>Item Name</th>
               <th>Delete Item</th>
+              <th>Add Item</th>
             </tr>
               {
-              singleorder.map((eaOrder, i) => (
-                <SingleOrderRow key={i} rows={eaOrder} deleteOrderItem={deleteOrderItem}/>
+              combined.map((eaOrder, i) => (
+                <SingleOrderRow handleChange={handleChange}key={i} rows={eaOrder} deleteOrderItem={deleteOrderItem}/>
               ))
               }
           </tbody>
         </table>
+        </div>
+        <div>
         </div>
       </div>
     )

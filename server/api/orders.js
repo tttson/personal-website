@@ -88,6 +88,22 @@ router.post('/', async (req,res, next) => {
 
 router.put('/:orderID', (req, res, next)=> {
 console.log('put route is hitting!!!', req.body, 'got order id', req.params.orderID)
+let addList = req.body.add
+let removeList = req.body.remove
+let orderID = req.params.orderID
+
+    let itemsIdordersId = addList.map((itemid)=> `(${orderID},${itemid})`).join(', ')
+      let sql2 = 'INSERT INTO order_items (order_id, item_id) VALUES ' + itemsIdordersId
+      console.log(sql2, ' using order id', orderID)
+      db.run(sql2, function(err, result){
+        if(err){
+          return console.error(err.message)
+        } else {
+          console.log(`Rows inserted ${this.changes}`)
+          res.status(201).json({"id": orderID})
+        }
+      })
+
 })
 
 

@@ -1,9 +1,11 @@
 import React, {Component} from 'react'
+import Checkbox from './Checkbox';
 
 const SingleOrderRow = (props) => {
   const eaOrder = props.rows
   const deleteOrderItem = props.deleteOrderItem
-// console.log('from OrderRows', props)
+  const handleChange = props.handleChange
+console.log('from Single Order Rows', props)
   return  (
     // <tr onClick = {() => deleteOrderItem(eaOrder.id)}>
     <tr>
@@ -11,7 +13,16 @@ const SingleOrderRow = (props) => {
       <td>{eaOrder.order_id}</td>
       <td>{eaOrder.item_id}</td>
       <td>{eaOrder.item_name}</td>
-      <td><button onClick = {() => deleteOrderItem(eaOrder.rowId,eaOrder.item_id)}>X</button></td>
+      <td>
+        {
+          eaOrder.order_id?
+          <button onClick = {() => deleteOrderItem(eaOrder.rowId,eaOrder.item_id)}>
+          X
+          </button>
+          : null
+        }
+        </td>
+      <td>{eaOrder.order_id? null: <Checkbox label={eaOrder.item_name} onCheckboxChange={handleChange}/>}</td>
     </tr>
   )
 }
