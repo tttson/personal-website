@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
-import QuickAccess from './QuickAccess';
+import React, { Component } from 'react'
+import QuickAccess from './QuickAccess'
 import axios from 'axios'
-import UserOrder from './UserOrder';
-import LandingTable from './LandingTable';
+// import UserOrder from './UserOrder'
+import AllOrdersTable from './AllOrdersTable'
 
 class Landing extends Component {
     constructor(props){
@@ -24,19 +24,16 @@ class Landing extends Component {
     }
   }
 
-  selectOrder = async (userId) => {
-    try {
-      const res = await axios.get(`/api/customers/${userId}/orders`)
-      this.setState({
-        selectedOrder: res.data
-      })
-    } catch (err) {
-      console.log('Something went wrong in getting selected order!', err)
-    }
+  //use this for delete entire order
+  removeOrderItem = async (orderItem) => {
+    const orderItemId = orderItem.id
+    const orders = this.state.orders
+    const filtered = orders.filter(item => item.id !== orderItemId)
+    await axios.delete(`/api/orders/${orderItemId}`)
+    this.setState({
+      orders: filtered
+    })
   }
-  //addToOrder function
-  //updateOrder function
-  //deleteOrder function
 
   render() {
     console.log('what is in my state in Landing', this.state.orders)
@@ -48,12 +45,8 @@ class Landing extends Component {
               <QuickAccess/>
               <QuickAccess/>
           </section>
-          <section className='landingtable'>
-          {
-              this.state.selectedOrder.id ?
-              <UserOrder userorder={this.state.selectedOrder}/> :
-              <LandingTable orders={this.state.orders} selectOrder={this.selectOrder}/>
-          }
+          <section className='allorders'>
+              <AllOrdersTable orders={this.state.orders}/>
           </section>
       </div>
     )

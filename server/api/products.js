@@ -4,11 +4,11 @@ const db = new sqlite3.Database('./inhome.db')
 
 router.get('/', (req, res, next)=> {
   db.all('SELECT * FROM items',
-  (error, users) => {
+  (error, products) => {
     if(error){
       next(error)
     } else {
-      res.status(200).json({users})
+      res.status(200).json({products})
     }
   })
 })

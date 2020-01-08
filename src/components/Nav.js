@@ -7,7 +7,7 @@ const Navbar = () => {
     <li><img src="/logo.png" alt="logo"/></li>
       <li>Create New Order</li>
       <li>Update Existing Order</li>
-      <li>View All Orders</li>
+      <li>Product Catalog</li>
       <li>Add New User</li>
     </ul>
     </div>

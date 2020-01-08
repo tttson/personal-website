@@ -1,23 +1,22 @@
 import React, {Component} from 'react'
+import OrderRow from './OrderRow'
 
-const UserOrder = (props) => {
-  const eaOrder = props.rows
-console.log('from OrderRows', props.rows)
+const AllOrdersTable = (props) => {
+  console.log('allorders', props)
     const allorders = props.orders
     const selectOrder = props.selectOrder
     return (
         <table>
           <tbody>
             <tr>
-              <th>Customer ID</th>
               <th>Customer Name</th>
+              <th>Customer ID</th>
               <th>Order No.</th>
-              <th>Product ID</th>
-              <th>Product Name</th>
+              <th>Item Count</th>
             </tr>
               {
-              allorders.map(eaOrder => (
-                <OrderRow rows={eaOrder} selectOrder={selectOrder}/>
+              allorders.map((eaOrder, i) => (
+                <OrderRow key={i} rows={eaOrder} selectOrder={selectOrder}/>
               ))
               }
           </tbody>
@@ -25,6 +24,4 @@ console.log('from OrderRows', props.rows)
     )
 }
 
-export default UserOrder
-
-
+export default AllOrdersTable

@@ -28,14 +28,71 @@ router.get('/:orderID', (req,res,next)=>{
   })
 })
 
-router.post('/', (req,res, next) => {
-  const name = req.body.name
+router.post('/', async (req,res, next) => {
+  //helper function to resolve promises so we can check if user id is valid
+  db.getAsync = function (sql) {
+    var that = this
+    return new Promise(function (resolve, reject) {
+        that.get(sql, function (err, row) {
+            if (err)
+                reject(err)
+            else
+                resolve(row)
+        })
+    })
+  }
+
+  const userID = req.body.userid
   const items = req.body.items
+  let validUserId
+  let errors = []
+  let checkUserId = `SELECT users.id from users WHERE users.id = ${userID}`
+  let row = await db.getAsync(checkUserId)
+  if (!row){
+    errors.push("No existing user ID in database")
+  } else {
+    validUserId = row.id
+  }
+  if (items.length === 0){
+    errors.push("No items specificied to add to order")
+  }
+  if (errors.length){
+    console.log('error', errors.join(', '))
+    res.status(400).json({"error": errors.join(', ')})
+    return
+  }
+
+  console.log('validUserId', validUserId)
+  let sql = `INSERT INTO orders (user_id) VALUES ($validUserId)`
+  let values = { $validUserId : validUserId}
+  //insert into the orders table to get new order id
+  db.run(sql, values, function(err){
+    if(err){
+      next(error)
+    } else {
+      let orderId = this.lastID
+      let placeholders = items.map((item)=> '(?,?)').join(',')
+      let itemsIdordersId = items.map((itemid)=> `(${orderId},${itemid})`).join(', ')
+      let sql2 = 'INSERT INTO order_items (order_id, item_id) VALUES ' + itemsIdordersId
+      console.log(sql2, ' using order id', orderId)
+      db.run(sql2, function(err, result){
+        if(err){
+          return console.error(err.message)
+        }
+        console.log(`Rows inserted ${this.changes}`)
+        res.status(201).json({"id": orderId})
+      })
+    }
+  })
+})
+
+router.put('/:orderID', (req, res, next)=> {
 
 })
 
-router.put('/:orderID')
 
+
+//this deletes the entire order
 router.delete('/:orderID', (req,res,next)=> {
   const sql = 'DELETE FROM orders WHERE orders.id = $orderID'
   const values = {$orderID: req.params.orderID}
