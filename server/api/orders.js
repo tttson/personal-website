@@ -104,6 +104,20 @@ let orderID = req.params.orderID
         }
       })
 
+  //deleting single items in the order
+        // let valsToRemove = []
+  // removeList.map((itemid)=> {valsToRemove.push([orderID,itemid])})
+  // let sql = `DELETE FROM order_items WHERE (order_id, item_id)  IN (?)` + valsToRemove
+  // //insert into the orders table to get new order id
+  // db.run(sql, values, function(err){
+  //   if(err){
+  //     return console.error(err.message)
+  //   } else {
+  //       console.log(`Rows removed ${this.changes}`)
+  //       res.status(201).json({"id": orderID})
+  //     }
+  //   })
+
 })
 
 

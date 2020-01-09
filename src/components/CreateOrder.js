@@ -101,30 +101,38 @@ class CreateOrder extends Component {
   render() {
     return (
       <div className="container">
+        <div className="create-order">
+        <h1>Create New Order Form</h1>
             <form onSubmit={this.handleSubmit}>
+            <p>Step 1: Please enter the customer ID.</p>
+            <Form type='Customer' id={this.state.id} handleFormChange={this.handleFormChange}/>
+            <br></br>
+            <p>Step 2: Please select items to place in order.</p>
               {this.createCheckboxes()}
-              <div className="form-group mt-2">
                 <button
                   type="button"
-                  className="btn btn-outline-primary mr-2"
+                  className="btn-white"
                   onClick={this.selectAll}
                 >
                   Select All
                 </button>
                 <button
                   type="button"
-                  className="btn btn-outline-primary mr-2"
+                  className="btn-white"
                   onClick={this.deselectAll}
                 >
                   Deselect All
                 </button>
-                <button type="submit" disabled={!this.state.id} className="btn btn-primary">
+                <div>
+                <p>Step 3: Please click SAVE to place order.</p>
+                <button type="submit" disabled={!this.state.id} className="btn-blue">
                   Save
                 </button>
               </div>
             </form>
-            <Form type='Customer' id={this.state.id} handleFormChange={this.handleFormChange}/>
+
             {this.state.ordercreated.id? <Confirmation action='created' orderId={this.state.ordercreated.id}/> : null}
+          </div>
       </div>
     )
   }

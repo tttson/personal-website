@@ -4,7 +4,8 @@ import Landing from './Landing'
 import Navbar from './Nav'
 import UpdateOrders from './UpdateOrders'
 import CreateOrder from './CreateOrder'
-import NotFound from './NotFound'
+import AllProducts from './AllProducts'
+import AllOrdersTable from './AllOrdersTable';
 
 class App extends Component {
   render() {
@@ -12,11 +13,10 @@ class App extends Component {
         <div id='container'>
             <Route exact path="/" component={Navbar}/>
             <Route exact path="/" component={Landing}/>
-
+            <Route exact path="/orders" component={AllOrdersTable}/>
             <Route exact path="/update" component={UpdateOrders}/>
-                        {/* <Route exact path='/update/:orderId' component={SingleOrder}/> */}
             <Route exact path="/create" component={CreateOrder}/>
-            {/* <Route path="*" component={NotFound} /> */}
+            <Route exact path="/catalog" component={AllProducts}/>
         </div>
     )
   }

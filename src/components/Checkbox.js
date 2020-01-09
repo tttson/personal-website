@@ -1,7 +1,7 @@
 import React from "react"
 
 const Checkbox = ({ label, isSelected, onCheckboxChange }) => (
-  <div className="form-check">
+  <div>
     <label>
       <input
         type="checkbox"
@@ -11,6 +11,7 @@ const Checkbox = ({ label, isSelected, onCheckboxChange }) => (
         className="form-check-input"
       />
     </label>
+    {label}
   </div>
 )
 

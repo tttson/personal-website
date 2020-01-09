@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import Checkbox from './Checkbox'
 import Confirmation from './Confirmation'
 import Form from './Form'
 import SingleOrderTable from './SingleOrderTable';
@@ -58,18 +57,6 @@ class UpdateOrders extends Component {
     })
     const res = await axios.get(`/api/orders/${this.state.id}`)
     const allOrders =  res.data
-    const items = {
-      'Banana': 1,
-      'Apples': 2,
-      'Lettuce': 3,
-      'Milk': 4,
-      'Soda': 5,
-      'Cereal': 6,
-      'Chips': 7,
-      'Eggs': 8,
-      'Bread': 9,
-      'Carrots': 10
-    }
     let filtered = []
     let currOrder = this.itemNumsOnly(allOrders.orders)
     for (let itemName in itemID){
@@ -155,10 +142,12 @@ let newlyRemoved
   render() {
     return (
       <div className="container">
+      <div className="update-order">
+      <h1>Update/Delete Existing Order Form</h1>
+      <p>Step 1: Please enter the order ID and click submit.</p>
       <Form type='Order' id={this.state.id} handleFormChange={this.handleFormChange}/>
-
-      <button type="submit" onClick={this.getOrderId}>Submit Order ID</button>
-
+      <button className="btn-white" style={{width:150}} type="submit" onClick={this.getOrderId}>submit Order ID</button>
+      <p>Step 2: Please see below for order details. Please add items to your order using the check box and remove using the button.</p>
       {
         this.state.orders.length ?
         <SingleOrderTable orders={this.state.orders} itemsNotInOrder={this.state.itemsNotInOrder} handleChange={this.handleChange} deleteOrderItem={this.deleteOrderItem} addOrderItem={this.addOrderItem}/> :
@@ -166,11 +155,13 @@ let newlyRemoved
       }
 
       <div>
-      <button onClick = {() => this.submitUpdatedOrder()}>SUBMIT UPDATED ORDER</button>
-      <button onClick = {() => this.submitDeleteOrder()}>DELETE ENTIRE ORDER</button>
+      <p>Step 3: Please click submit or delete when you are ready to submit changes to your order.</p>
+      <button className="btn-white" style={{width:250}}  onClick = {() => this.submitUpdatedOrder()}>SUBMIT UPDATED ORDER</button>
+      <button className="btn-red" onClick = {() => this.submitDeleteOrder()}>DELETE ENTIRE ORDER</button>
       </div>
 
       {this.state.orderupdated.id? <Confirmation action='updated' orderId={this.state.orderupdated.id}/> : null}
+      </div>
       </div>
     )
   }

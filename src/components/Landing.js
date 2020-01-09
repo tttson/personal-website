@@ -9,7 +9,7 @@ class Landing extends Component {
     super(props)
     this.state = {
       orders: [],
-      selectedOrder: {}
+      content: [{id:'users',text:'Total Users' ,img:"/user.png"}, {id:'orders',text:'Total Orders',img:'/orders.png'}, {id:'catalog',text:'Catalog',img:'/catalog.png'}, {id:'freq',text:'Freqently Ordered Items', img:'/freq.png'}]
     }
   }
   async componentDidMount() {
@@ -24,29 +24,20 @@ class Landing extends Component {
     }
   }
 
-  //use this for delete entire order
-  removeOrderItem = async (orderItem) => {
-    const orderItemId = orderItem.id
-    const orders = this.state.orders
-    const filtered = orders.filter(item => item.id !== orderItemId)
-    await axios.delete(`/api/orders/${orderItemId}`)
-    this.setState({
-      orders: filtered
-    })
-  }
-
   render() {
-    console.log('what is in my state in Landing', this.state.orders)
+    let content = this.state.content
+    console.log('this.state.content', this.state.content)
     return (
       <div className='main'>
           <section className='quickaccess'>
-              <QuickAccess/>
-              <QuickAccess/>
-              <QuickAccess/>
-              <QuickAccess/>
+            {
+              content.map((block, i) => (
+              <div id={block.id}><QuickAccess id={block.id} img={block.img} text={block.text}/></div>
+              ))
+            }
           </section>
           <section className='allorders'>
-              <AllOrdersTable orders={this.state.orders}/>
+            <AllOrdersTable orders={this.state.orders}/>
           </section>
       </div>
     )

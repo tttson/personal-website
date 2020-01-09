@@ -11102,7 +11102,7 @@ var Checkbox = function Checkbox(_ref) {
       onCheckboxChange = _ref.onCheckboxChange;
   return _react2.default.createElement(
     "div",
-    { className: "form-check" },
+    null,
     _react2.default.createElement(
       "label",
       null,
@@ -11113,7 +11113,8 @@ var Checkbox = function Checkbox(_ref) {
         onChange: onCheckboxChange,
         className: "form-check-input"
       })
-    )
+    ),
+    label
   );
 };
 
@@ -34884,9 +34885,13 @@ var _CreateOrder = __webpack_require__(595);
 
 var _CreateOrder2 = _interopRequireDefault(_CreateOrder);
 
-var _NotFound = __webpack_require__(596);
+var _AllProducts = __webpack_require__(599);
 
-var _NotFound2 = _interopRequireDefault(_NotFound);
+var _AllProducts2 = _interopRequireDefault(_AllProducts);
+
+var _AllOrdersTable = __webpack_require__(589);
+
+var _AllOrdersTable2 = _interopRequireDefault(_AllOrdersTable);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -34913,8 +34918,10 @@ var App = function (_Component) {
                 { id: 'container' },
                 _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/', component: _Nav2.default }),
                 _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/', component: _Landing2.default }),
+                _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/orders', component: _AllOrdersTable2.default }),
                 _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/update', component: _UpdateOrders2.default }),
-                _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/create', component: _CreateOrder2.default })
+                _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/create', component: _CreateOrder2.default }),
+                _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/catalog', component: _AllProducts2.default })
             );
         }
     }]);
@@ -36222,48 +36229,13 @@ var Landing = function (_Component) {
   _inherits(Landing, _Component);
 
   function Landing(props) {
-    var _this2 = this;
-
     _classCallCheck(this, Landing);
 
     var _this = _possibleConstructorReturn(this, (Landing.__proto__ || Object.getPrototypeOf(Landing)).call(this, props));
 
-    _this.removeOrderItem = function () {
-      var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(orderItem) {
-        var orderItemId, orders, filtered;
-        return regeneratorRuntime.wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                orderItemId = orderItem.id;
-                orders = _this.state.orders;
-                filtered = orders.filter(function (item) {
-                  return item.id !== orderItemId;
-                });
-                _context.next = 5;
-                return _axios2.default.delete('/api/orders/' + orderItemId);
-
-              case 5:
-                _this.setState({
-                  orders: filtered
-                });
-
-              case 6:
-              case 'end':
-                return _context.stop();
-            }
-          }
-        }, _callee, _this2);
-      }));
-
-      return function (_x) {
-        return _ref.apply(this, arguments);
-      };
-    }();
-
     _this.state = {
       orders: [],
-      selectedOrder: {}
+      content: [{ id: 'users', text: 'Total Users', img: "/user.png" }, { id: 'orders', text: 'Total Orders', img: '/orders.png' }, { id: 'catalog', text: 'Catalog', img: '/catalog.png' }, { id: 'freq', text: 'Freqently Ordered Items', img: '/freq.png' }]
     };
     return _this;
   }
@@ -36271,63 +36243,64 @@ var Landing = function (_Component) {
   _createClass(Landing, [{
     key: 'componentDidMount',
     value: function () {
-      var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
+      var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
         var res, allOrders;
-        return regeneratorRuntime.wrap(function _callee2$(_context2) {
+        return regeneratorRuntime.wrap(function _callee$(_context) {
           while (1) {
-            switch (_context2.prev = _context2.next) {
+            switch (_context.prev = _context.next) {
               case 0:
-                _context2.prev = 0;
-                _context2.next = 3;
+                _context.prev = 0;
+                _context.next = 3;
                 return _axios2.default.get('/api/customers/orders');
 
               case 3:
-                res = _context2.sent;
+                res = _context.sent;
                 allOrders = res.data;
 
                 this.setState({
                   orders: allOrders.orders
                 });
-                _context2.next = 11;
+                _context.next = 11;
                 break;
 
               case 8:
-                _context2.prev = 8;
-                _context2.t0 = _context2['catch'](0);
+                _context.prev = 8;
+                _context.t0 = _context['catch'](0);
 
-                console.log('Something went wrong in getting all orders!', _context2.t0);
+                console.log('Something went wrong in getting all orders!', _context.t0);
 
               case 11:
               case 'end':
-                return _context2.stop();
+                return _context.stop();
             }
           }
-        }, _callee2, this, [[0, 8]]);
+        }, _callee, this, [[0, 8]]);
       }));
 
       function componentDidMount() {
-        return _ref2.apply(this, arguments);
+        return _ref.apply(this, arguments);
       }
 
       return componentDidMount;
     }()
-
-    //use this for delete entire order
-
   }, {
     key: 'render',
     value: function render() {
-      console.log('what is in my state in Landing', this.state.orders);
+      var content = this.state.content;
+      console.log('this.state.content', this.state.content);
       return _react2.default.createElement(
         'div',
         { className: 'main' },
         _react2.default.createElement(
           'section',
           { className: 'quickaccess' },
-          _react2.default.createElement(_QuickAccess2.default, null),
-          _react2.default.createElement(_QuickAccess2.default, null),
-          _react2.default.createElement(_QuickAccess2.default, null),
-          _react2.default.createElement(_QuickAccess2.default, null)
+          content.map(function (block, i) {
+            return _react2.default.createElement(
+              'div',
+              { id: block.id },
+              _react2.default.createElement(_QuickAccess2.default, { id: block.id, img: block.img, text: block.text })
+            );
+          })
         ),
         _react2.default.createElement(
           'section',
@@ -36358,10 +36331,29 @@ var _react = __webpack_require__(9);
 
 var _react2 = _interopRequireDefault(_react);
 
+var _reactRouterDom = __webpack_require__(225);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var QuickAccess = function QuickAccess() {
-  return _react2.default.createElement("div", { id: "top" });
+var QuickAccess = function QuickAccess(props) {
+  var text = props.text;
+  var id = props.id;
+  var imgLink = props.img;
+  console.log('in quickaccess', props);
+  return _react2.default.createElement(
+    'div',
+    null,
+    _react2.default.createElement(
+      _reactRouterDom.Link,
+      { to: '/' + id },
+      _react2.default.createElement('img', { src: imgLink })
+    ),
+    _react2.default.createElement(
+      'p',
+      null,
+      text
+    )
+  );
 };
 
 exports.default = QuickAccess;
@@ -37321,6 +37313,8 @@ var _react = __webpack_require__(9);
 
 var _react2 = _interopRequireDefault(_react);
 
+var _reactRouterDom = __webpack_require__(225);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var Navbar = function Navbar() {
@@ -37336,24 +37330,31 @@ var Navbar = function Navbar() {
         _react2.default.createElement('img', { src: '/logo.png', alt: 'logo' })
       ),
       _react2.default.createElement(
-        'li',
-        null,
-        'Create New Order'
+        _reactRouterDom.Link,
+        { to: '/create' },
+        _react2.default.createElement(
+          'li',
+          null,
+          'Create New Order'
+        )
       ),
       _react2.default.createElement(
-        'li',
-        null,
-        'Update Existing Order'
+        _reactRouterDom.Link,
+        { to: '/update' },
+        _react2.default.createElement(
+          'li',
+          null,
+          'Update Existing Order'
+        )
       ),
       _react2.default.createElement(
-        'li',
-        null,
-        'Product Catalog'
-      ),
-      _react2.default.createElement(
-        'li',
-        null,
-        'Add New User'
+        _reactRouterDom.Link,
+        { to: '/catalog' },
+        _react2.default.createElement(
+          'li',
+          null,
+          'Product Catalog'
+        )
       )
     )
   );
@@ -37379,10 +37380,6 @@ var _createClass = function () { function defineProperties(target, props) { for 
 var _react = __webpack_require__(9);
 
 var _react2 = _interopRequireDefault(_react);
-
-var _Checkbox = __webpack_require__(154);
-
-var _Checkbox2 = _interopRequireDefault(_Checkbox);
 
 var _Confirmation = __webpack_require__(236);
 
@@ -37450,7 +37447,7 @@ var UpdateOrders = function (_Component) {
 
     _this.getOrderId = function () {
       var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(event) {
-        var res, allOrders, items, filtered, currOrder, itemName;
+        var res, allOrders, filtered, currOrder, itemName;
         return regeneratorRuntime.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
@@ -37462,18 +37459,6 @@ var UpdateOrders = function (_Component) {
               case 3:
                 res = _context.sent;
                 allOrders = res.data;
-                items = {
-                  'Banana': 1,
-                  'Apples': 2,
-                  'Lettuce': 3,
-                  'Milk': 4,
-                  'Soda': 5,
-                  'Cereal': 6,
-                  'Chips': 7,
-                  'Eggs': 8,
-                  'Bread': 9,
-                  'Carrots': 10
-                };
                 filtered = [];
                 currOrder = _this.itemNumsOnly(allOrders.orders);
 
@@ -37491,7 +37476,7 @@ var UpdateOrders = function (_Component) {
                 });
                 console.log('id set to state', _this.state);
 
-              case 12:
+              case 11:
               case 'end':
                 return _context.stop();
             }
@@ -37653,32 +37638,56 @@ var UpdateOrders = function (_Component) {
       return _react2.default.createElement(
         'div',
         { className: 'container' },
-        _react2.default.createElement(_Form2.default, { type: 'Order', id: this.state.id, handleFormChange: this.handleFormChange }),
-        _react2.default.createElement(
-          'button',
-          { type: 'submit', onClick: this.getOrderId },
-          'Submit Order ID'
-        ),
-        this.state.orders.length ? _react2.default.createElement(_SingleOrderTable2.default, { orders: this.state.orders, itemsNotInOrder: this.state.itemsNotInOrder, handleChange: this.handleChange, deleteOrderItem: this.deleteOrderItem, addOrderItem: this.addOrderItem }) : null,
         _react2.default.createElement(
           'div',
-          null,
+          { className: 'update-order' },
           _react2.default.createElement(
-            'button',
-            { onClick: function onClick() {
-                return _this3.submitUpdatedOrder();
-              } },
-            'SUBMIT UPDATED ORDER'
+            'h1',
+            null,
+            'Update/Delete Existing Order Form'
           ),
           _react2.default.createElement(
+            'p',
+            null,
+            'Step 1: Please enter the order ID and click submit.'
+          ),
+          _react2.default.createElement(_Form2.default, { type: 'Order', id: this.state.id, handleFormChange: this.handleFormChange }),
+          _react2.default.createElement(
             'button',
-            { onClick: function onClick() {
-                return _this3.submitDeleteOrder();
-              } },
-            'DELETE ENTIRE ORDER'
-          )
-        ),
-        this.state.orderupdated.id ? _react2.default.createElement(_Confirmation2.default, { action: 'updated', orderId: this.state.orderupdated.id }) : null
+            { className: 'btn-white', style: { width: 150 }, type: 'submit', onClick: this.getOrderId },
+            'submit Order ID'
+          ),
+          _react2.default.createElement(
+            'p',
+            null,
+            'Step 2: Please see below for order details. Please add items to your order using the check box and remove using the button.'
+          ),
+          this.state.orders.length ? _react2.default.createElement(_SingleOrderTable2.default, { orders: this.state.orders, itemsNotInOrder: this.state.itemsNotInOrder, handleChange: this.handleChange, deleteOrderItem: this.deleteOrderItem, addOrderItem: this.addOrderItem }) : null,
+          _react2.default.createElement(
+            'div',
+            null,
+            _react2.default.createElement(
+              'p',
+              null,
+              'Step 3: Please click submit or delete when you are ready to submit changes to your order.'
+            ),
+            _react2.default.createElement(
+              'button',
+              { className: 'btn-white', style: { width: 250 }, onClick: function onClick() {
+                  return _this3.submitUpdatedOrder();
+                } },
+              'SUBMIT UPDATED ORDER'
+            ),
+            _react2.default.createElement(
+              'button',
+              { className: 'btn-red', onClick: function onClick() {
+                  return _this3.submitDeleteOrder();
+                } },
+              'DELETE ENTIRE ORDER'
+            )
+          ),
+          this.state.orderupdated.id ? _react2.default.createElement(_Confirmation2.default, { action: 'updated', orderId: this.state.orderupdated.id }) : null
+        )
       );
     }
   }]);
@@ -37713,9 +37722,6 @@ var SingleOrderTable = function SingleOrderTable(props) {
   // console.log('single order table', props)
   var singleorder = props.orders;
   var deleteOrderItem = props.deleteOrderItem;
-  var addOrderItem = props.addOrderItem;
-  var products = props.products;
-  var createCheckboxes = props.createCheckboxes;
   var itemsNotInOrder = props.itemsNotInOrder;
   var handleChange = props.handleChange;
   var combined = singleorder.concat(itemsNotInOrder);
@@ -37804,47 +37810,44 @@ var SingleOrderRow = function SingleOrderRow(props) {
   var deleteOrderItem = props.deleteOrderItem;
   var handleChange = props.handleChange;
   console.log('from Single Order Rows', props);
-  return (
-    // <tr onClick = {() => deleteOrderItem(eaOrder.id)}>
+  return _react2.default.createElement(
+    'tr',
+    null,
     _react2.default.createElement(
-      'tr',
+      'td',
       null,
-      _react2.default.createElement(
-        'td',
-        null,
-        eaOrder.rowId
-      ),
-      _react2.default.createElement(
-        'td',
-        null,
-        eaOrder.order_id
-      ),
-      _react2.default.createElement(
-        'td',
-        null,
-        eaOrder.item_id
-      ),
-      _react2.default.createElement(
-        'td',
-        null,
-        eaOrder.item_name
-      ),
-      _react2.default.createElement(
-        'td',
-        null,
-        eaOrder.order_id ? _react2.default.createElement(
-          'button',
-          { onClick: function onClick() {
-              return deleteOrderItem(eaOrder.rowId, eaOrder.item_id);
-            } },
-          'X'
-        ) : null
-      ),
-      _react2.default.createElement(
-        'td',
-        null,
-        eaOrder.order_id ? null : _react2.default.createElement(_Checkbox2.default, { label: eaOrder.item_name, onCheckboxChange: handleChange })
-      )
+      eaOrder.rowId
+    ),
+    _react2.default.createElement(
+      'td',
+      null,
+      eaOrder.order_id
+    ),
+    _react2.default.createElement(
+      'td',
+      null,
+      eaOrder.item_id
+    ),
+    _react2.default.createElement(
+      'td',
+      null,
+      eaOrder.item_name
+    ),
+    _react2.default.createElement(
+      'td',
+      null,
+      eaOrder.order_id ? _react2.default.createElement(
+        'button',
+        { onClick: function onClick() {
+            return deleteOrderItem(eaOrder.rowId, eaOrder.item_id);
+          } },
+        'X'
+      ) : null
+    ),
+    _react2.default.createElement(
+      'td',
+      null,
+      eaOrder.order_id ? null : _react2.default.createElement(_Checkbox2.default, { label: eaOrder.item_name, onCheckboxChange: handleChange })
     )
   );
 };
@@ -38030,17 +38033,34 @@ var CreateOrder = function (_Component) {
         'div',
         { className: 'container' },
         _react2.default.createElement(
-          'form',
-          { onSubmit: this.handleSubmit },
-          this.createCheckboxes(),
+          'div',
+          { className: 'create-order' },
           _react2.default.createElement(
-            'div',
-            { className: 'form-group mt-2' },
+            'h1',
+            null,
+            'Create New Order Form'
+          ),
+          _react2.default.createElement(
+            'form',
+            { onSubmit: this.handleSubmit },
+            _react2.default.createElement(
+              'p',
+              null,
+              'Step 1: Please enter the customer ID.'
+            ),
+            _react2.default.createElement(_Form2.default, { type: 'Customer', id: this.state.id, handleFormChange: this.handleFormChange }),
+            _react2.default.createElement('br', null),
+            _react2.default.createElement(
+              'p',
+              null,
+              'Step 2: Please select items to place in order.'
+            ),
+            this.createCheckboxes(),
             _react2.default.createElement(
               'button',
               {
                 type: 'button',
-                className: 'btn btn-outline-primary mr-2',
+                className: 'btn-white',
                 onClick: this.selectAll
               },
               'Select All'
@@ -38049,20 +38069,28 @@ var CreateOrder = function (_Component) {
               'button',
               {
                 type: 'button',
-                className: 'btn btn-outline-primary mr-2',
+                className: 'btn-white',
                 onClick: this.deselectAll
               },
               'Deselect All'
             ),
             _react2.default.createElement(
-              'button',
-              { type: 'submit', disabled: !this.state.id, className: 'btn btn-primary' },
-              'Save'
+              'div',
+              null,
+              _react2.default.createElement(
+                'p',
+                null,
+                'Step 3: Please click SAVE to place order.'
+              ),
+              _react2.default.createElement(
+                'button',
+                { type: 'submit', disabled: !this.state.id, className: 'btn-blue' },
+                'Save'
+              )
             )
-          )
-        ),
-        _react2.default.createElement(_Form2.default, { type: 'Customer', id: this.state.id, handleFormChange: this.handleFormChange }),
-        this.state.ordercreated.id ? _react2.default.createElement(_Confirmation2.default, { action: 'created', orderId: this.state.ordercreated.id }) : null
+          ),
+          this.state.ordercreated.id ? _react2.default.createElement(_Confirmation2.default, { action: 'created', orderId: this.state.ordercreated.id }) : null
+        )
       );
     }
   }]);
@@ -38073,7 +38101,10 @@ var CreateOrder = function (_Component) {
 exports.default = CreateOrder;
 
 /***/ }),
-/* 596 */
+/* 596 */,
+/* 597 */,
+/* 598 */,
+/* 599 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -38083,30 +38114,144 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
 var _react = __webpack_require__(9);
 
 var _react2 = _interopRequireDefault(_react);
 
+var _axios = __webpack_require__(152);
+
+var _axios2 = _interopRequireDefault(_axios);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var NotFound = function NotFound() {
-  return _react2.default.createElement(
-    "div",
-    null,
-    _react2.default.createElement("br", null),
-    _react2.default.createElement("br", null),
-    _react2.default.createElement("br", null),
-    _react2.default.createElement("br", null),
-    _react2.default.createElement("img", { src: "https://thumbs.gfycat.com/DearestSerpentineEnglishsetter-size_restricted.gif" }),
-    _react2.default.createElement(
-      "h1",
-      null,
-      "Sorry... page not found!"
-    )
-  );
-};
+function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
 
-exports.default = NotFound;
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var AllProducts = function (_Component) {
+  _inherits(AllProducts, _Component);
+
+  function AllProducts(props) {
+    _classCallCheck(this, AllProducts);
+
+    var _this = _possibleConstructorReturn(this, (AllProducts.__proto__ || Object.getPrototypeOf(AllProducts)).call(this, props));
+
+    _this.state = {
+      products: []
+    };
+    return _this;
+  }
+
+  _createClass(AllProducts, [{
+    key: 'componentDidMount',
+    value: function () {
+      var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+        var res, all;
+        return regeneratorRuntime.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.prev = 0;
+                _context.next = 3;
+                return _axios2.default.get('/api/products');
+
+              case 3:
+                res = _context.sent;
+                all = res.data;
+
+                this.setState({
+                  products: all.products
+                });
+                _context.next = 11;
+                break;
+
+              case 8:
+                _context.prev = 8;
+                _context.t0 = _context['catch'](0);
+
+                console.log('Something went wrong in getting all orders!', _context.t0);
+
+              case 11:
+              case 'end':
+                return _context.stop();
+            }
+          }
+        }, _callee, this, [[0, 8]]);
+      }));
+
+      function componentDidMount() {
+        return _ref.apply(this, arguments);
+      }
+
+      return componentDidMount;
+    }()
+  }, {
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'div',
+        { id: 'container' },
+        _react2.default.createElement(
+          'div',
+          { className: 'all-products' },
+          _react2.default.createElement(
+            'h1',
+            null,
+            'Product Catalog'
+          ),
+          _react2.default.createElement(
+            'table',
+            null,
+            _react2.default.createElement(
+              'tbody',
+              null,
+              _react2.default.createElement(
+                'tr',
+                null,
+                _react2.default.createElement(
+                  'th',
+                  null,
+                  'Product Name'
+                ),
+                _react2.default.createElement(
+                  'th',
+                  null,
+                  'Product ID'
+                )
+              ),
+              this.state.products.map(function (item) {
+                return _react2.default.createElement(
+                  'tr',
+                  null,
+                  _react2.default.createElement(
+                    'td',
+                    null,
+                    item.id
+                  ),
+                  _react2.default.createElement(
+                    'td',
+                    null,
+                    item.name
+                  )
+                );
+              })
+            )
+          )
+        )
+      );
+    }
+  }]);
+
+  return AllProducts;
+}(_react.Component);
+
+exports.default = AllProducts;
 
 /***/ })
 /******/ ]);

@@ -1,19 +1,5 @@
 import React, { Component } from 'react'
-
-const PRODUCTS = ['Banana','Apples','Lettuce','Milk','Soda','Cereal','Chips','Eggs','Bread','Carrots']
-
-const itemID = {
-  'Banana': 1,
-  'Apples': 2,
-  'Lettuce': 3,
-  'Milk': 4,
-  'Soda': 5,
-  'Cereal': 6,
-  'Chips': 7,
-  'Eggs': 8,
-  'Bread': 9,
-  'Carrots': 10
-}
+import axios from 'axios'
 
 class AllProducts extends Component {
   constructor (props){
@@ -24,15 +10,41 @@ class AllProducts extends Component {
   }
   async componentDidMount() {
     try {
-      const res = await axios.get('/api/customers/orders')
-      const allOrders =  res.data
+      const res = await axios.get('/api/products')
+      const all =  res.data
       this.setState({
-        orders: products.orders
+        products: all.products
       })
     } catch (err){
     console.log('Something went wrong in getting all orders!', err)
     }
   }
+
+  render(){
+    return(
+      <div id="container">
+        <div className="all-products">
+        <h1>Product Catalog</h1>
+          <table>
+            <tbody>
+              <tr>
+                <th>Product Name</th>
+                <th>Product ID</th>
+              </tr>
+                {
+                this.state.products.map(item=>(
+                  <tr>
+                    <td>{item.id}</td>
+                    <td>{item.name}</td>
+                  </tr>))
+                }
+            </tbody>
+          </table>
+          </div>
+        </div>
+    )
+  }
 }
+
 
 export default AllProducts

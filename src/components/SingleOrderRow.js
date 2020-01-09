@@ -7,7 +7,6 @@ const SingleOrderRow = (props) => {
   const handleChange = props.handleChange
 console.log('from Single Order Rows', props)
   return  (
-    // <tr onClick = {() => deleteOrderItem(eaOrder.id)}>
     <tr>
       <td>{eaOrder.rowId}</td>
       <td>{eaOrder.order_id}</td>

@@ -5,9 +5,6 @@ const SingleOrderTable = (props) => {
   // console.log('single order table', props)
     const singleorder = props.orders
     const deleteOrderItem = props.deleteOrderItem
-    const addOrderItem = props.addOrderItem
-    const products = props.products
-    const createCheckboxes = props.createCheckboxes
     const itemsNotInOrder = props.itemsNotInOrder
     const handleChange = props.handleChange
     let combined = singleorder.concat(itemsNotInOrder)
