@@ -9,14 +9,17 @@ class Landing extends Component {
     super(props)
     this.state = {
       orders: [],
-      content: [{id:'users',text:'Total Users' ,img:"/user.png"}, {id:'orders',text:'Total Orders',img:'/orders.png'}, {id:'catalog',text:'Catalog',img:'/catalog.png'}, {id:'freq',text:'Freqently Ordered Items', img:'/freq.png'}]
+      users: [],
+      content: [{id:'users',text:'Total Customers',img:"/user.png"}, {id:'orders',text:'Total Orders',img:'/orders.png'}, {id:'catalog',text:'Catalog',img:'/catalog.png'}, {id:'location',text:'Geo Location', img:'/location.png'}]
     }
   }
   async componentDidMount() {
     try {
       const res = await axios.get('/api/customers/orders')
+      const resUsers = await axios.get('/api/customers')
       const allOrders =  res.data
       this.setState({
+        users: resUsers.data.users,
         orders: allOrders.orders
       })
     } catch (err){
@@ -24,15 +27,15 @@ class Landing extends Component {
     }
   }
 
+
   render() {
     let content = this.state.content
-    console.log('this.state.content', this.state.content)
     return (
       <div className='main'>
           <section className='quickaccess'>
             {
               content.map((block, i) => (
-              <div id={block.id}><QuickAccess id={block.id} img={block.img} text={block.text}/></div>
+              <div id={block.id}><QuickAccess id={block.id} img={block.img} text={block.text} userNum={this.state.users.length} ttl={this.state.orders.length}/></div>
               ))
             }
           </section>

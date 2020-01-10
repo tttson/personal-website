@@ -5,7 +5,9 @@ import Navbar from './Nav'
 import UpdateOrders from './UpdateOrders'
 import CreateOrder from './CreateOrder'
 import AllProducts from './AllProducts'
-import AllOrdersTable from './AllOrdersTable';
+import Users from './Users'
+import OrdersItemized from './OrdersItemized'
+import Location from './Location'
 
 class App extends Component {
   render() {
@@ -13,10 +15,12 @@ class App extends Component {
         <div id='container'>
             <Route exact path="/" component={Navbar}/>
             <Route exact path="/" component={Landing}/>
-            <Route exact path="/orders" component={AllOrdersTable}/>
+            <Route exact path="/users" component={Users}/>
+            <Route exact path="/orders" component={OrdersItemized}/>
             <Route exact path="/update" component={UpdateOrders}/>
             <Route exact path="/create" component={CreateOrder}/>
             <Route exact path="/catalog" component={AllProducts}/>
+            <Route exact path="/location" component={Location}/>
         </div>
     )
   }

@@ -3,6 +3,7 @@ import Checkbox from './Checkbox'
 import Form from './Form'
 import axios from 'axios'
 import Confirmation from './Confirmation'
+import {Link} from 'react-router-dom'
 
 const PRODUCTS = ['Banana','Apples','Lettuce','Milk','Soda','Cereal','Chips','Eggs','Bread','Carrots']
 
@@ -131,7 +132,9 @@ class CreateOrder extends Component {
               </div>
             </form>
 
-            {this.state.ordercreated.id? <Confirmation action='created' orderId={this.state.ordercreated.id}/> : null}
+            {this.state.ordercreated.id? <Link to="/"><Confirmation action='created' orderId={this.state.ordercreated.id}/></Link> : null}
+            <br></br>
+            <Link to="/"><button className="btn-white" style={{width:250}}>GO BACK TO HOMEPAGE >></button></Link>
           </div>
       </div>
     )

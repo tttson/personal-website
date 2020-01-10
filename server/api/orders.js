@@ -91,47 +91,59 @@ console.log('put route is hitting!!!', req.body, 'got order id', req.params.orde
 let addList = req.body.add
 let removeList = req.body.remove
 let orderID = req.params.orderID
-
-    let itemsIdordersId = addList.map((itemid)=> `(${orderID},${itemid})`).join(', ')
-      let sql2 = 'INSERT INTO order_items (order_id, item_id) VALUES ' + itemsIdordersId
-      console.log(sql2, ' using order id', orderID)
-      db.run(sql2, function(err, result){
-        if(err){
-          return console.error(err.message)
-        } else {
-          console.log(`Rows inserted ${this.changes}`)
-          res.status(201).json({"id": orderID})
+if(addList.length > 0) {
+  let itemsIdordersId = addList.map((itemid)=> `(${orderID},${itemid})`).join(', ')
+    let sql1 = 'INSERT INTO order_items (order_id, item_id) VALUES ' + itemsIdordersId
+    console.log(sql1, ' using order id', orderID)
+    db.run(sql1, function(err, result){
+      if(err){
+        return console.error(err.message)
+      } else {
+        if(removeList) {
+          for (let i = 0; i<removeList.length; i++){
+            let item = removeList[i]
+            let sql2 = `DELETE FROM order_items WHERE order_id = ${orderID} AND item_id = ${item}`
+              db.run(sql2, function(err){
+                if(err){
+                  return console.error(err.message)
+                }else {
+                  console.log(`Rows removed ${this.changes}`)
+                }
+              })
+          }
         }
-      })
-
-  //deleting single items in the order
-        // let valsToRemove = []
-  // removeList.map((itemid)=> {valsToRemove.push([orderID,itemid])})
-  // let sql = `DELETE FROM order_items WHERE (order_id, item_id)  IN (?)` + valsToRemove
-  // //insert into the orders table to get new order id
-  // db.run(sql, values, function(err){
-  //   if(err){
-  //     return console.error(err.message)
-  //   } else {
-  //       console.log(`Rows removed ${this.changes}`)
-  //       res.status(201).json({"id": orderID})
-  //     }
-  //   })
-
+        res.status(201).json({"id": orderID})
+      }
+    })
+  } else {
+    if(removeList) {
+      for (let i = 0; i<removeList.length; i++){
+        let item = removeList[i]
+        let sql2 = `DELETE FROM order_items WHERE order_id = ${orderID} AND item_id = ${item}`
+          db.run(sql2, function(err){
+            if(err){
+              return console.error(err.message)
+            }else {
+              console.log(`Rows removed ${this.changes}`)
+            }
+          })
+      }
+    }
+    res.status(201).json({"id": orderID})
+  }
 })
-
 
 
 //this deletes the entire order
 router.delete('/:orderID', (req,res,next)=> {
-  console.log('hitting the delete route!!!')
+  let orderID = req.params.orderID
   const sql = 'DELETE FROM orders WHERE orders.id = $orderID'
   const values = {$orderID: req.params.orderID}
   db.run(sql, values, (error) => {
     if(error){
       next(error)
     } else {
-      res.sendStatus(204)
+      res.status(204).json({"id": orderID})
     }
   })
 })

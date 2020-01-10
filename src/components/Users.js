@@ -2,19 +2,19 @@ import React, { Component } from 'react'
 import {Link} from 'react-router-dom'
 import axios from 'axios'
 
-class AllProducts extends Component {
+class Users extends Component {
   constructor (props){
     super(props)
     this.state = {
-      products: []
+      users: []
     }
   }
   async componentDidMount() {
     try {
-      const res = await axios.get('/api/products')
+      const res = await axios.get('/api/customers')
       const all =  res.data
       this.setState({
-        products: all.products
+        users: all.users
       })
     } catch (err){
     console.log('Something went wrong in getting all orders!', err)
@@ -25,18 +25,18 @@ class AllProducts extends Component {
     return(
       <div id="container">
         <div className="all-products">
-        <h1>Product Catalog</h1>
+        <h1>Customer Info</h1>
         <table>
             <tbody>
               <tr>
-                <th>Product Name</th>
-                <th>Product ID</th>
+                <th>Customer Name</th>
+                <th>Customer ID</th>
               </tr>
                 {
-                this.state.products.map(item=>(
+                this.state.users.map(user=>(
                   <tr>
-                    <td>{item.id}</td>
-                    <td>{item.name}</td>
+                    <td>{user.id}</td>
+                    <td>{user.name}</td>
                   </tr>))
                 }
             </tbody>
@@ -49,4 +49,4 @@ class AllProducts extends Component {
 }
 
 
-export default AllProducts
+export default Users

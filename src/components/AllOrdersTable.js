@@ -6,7 +6,7 @@ const AllOrdersTable = (props) => {
     const allorders = props.orders
     const selectOrder = props.selectOrder
     return (
-        <table>
+      <table>
           <tbody>
             <tr>
               <th>Customer Name</th>

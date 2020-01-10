@@ -3,6 +3,7 @@ import Confirmation from './Confirmation'
 import Form from './Form'
 import SingleOrderTable from './SingleOrderTable';
 import axios from 'axios'
+import {Link} from 'react-router-dom'
 
 const PRODUCTS = ['Banana','Apples','Lettuce','Milk','Soda','Cereal','Chips','Eggs','Bread','Carrots']
 
@@ -24,11 +25,11 @@ class UpdateOrders extends Component {
     super(props)
     this.state = {
       itemsNotInOrder: [],
-      added: [],
       removed: [],
       orders: [],
       id: '',
       orderupdated: {},
+      deleted: false,
       checkboxes: PRODUCTS.reduce(
         (options, option) => ({
           ...options,
@@ -79,19 +80,12 @@ class UpdateOrders extends Component {
 
   deleteOrderItem = async (rowId, itemId) => {
     await this.setState({
-      orders: this.state.orders.filter(item => item.rowId !== rowId)
+      orders: this.state.orders.filter(item => item.rowId !== rowId),
+      removed: [...this.state.removed, itemId]
     })
-
-    let idx = this.state.added.indexOf(itemId)
-    if(idx === -1 || this.state.added.length === 0){
-      this.state.removed.push(itemId)
-    } else {
-      let idx = this.state.added.indexOf(itemId)
-      this.state.added.splice(idx,1)
-    }
     console.log('in removed:', this.state.removed)
-    console.log('in added:',  this.state.added)
   }
+
 
   itemNumsOnly = (arr) => {
     let list = []
@@ -110,9 +104,7 @@ class UpdateOrders extends Component {
       orderitems.push(itemID[checkbox])
       console.log(orderitems, 'in cart')
     })
-    const info = { items: orderitems, removed: this.state.removed}
-    console.log('added items to order', orderitems)
-let newlyRemoved
+    let newlyRemoved
     if (this.state.removed.length > 0) {
       newlyRemoved = this.state.removed
     }
@@ -121,16 +113,17 @@ let newlyRemoved
     this.setState({
       orderupdated: res.data
     })
-    console.log('SUCCESS WE ADDED IN PUT ROUTE')
+    console.log('SUCCESS WE ADDED IN PUT ROUTE', this.state.orderupdated)
   }
 
   submitDeleteOrder = async ()  => {
     const res = await axios.delete(`/api/orders/${this.state.id}`)
+    let orderID = this.state.id
     this.setState({
       orders: [],
-      orderupdated: this.state.id
+      deleted: true
     })
-
+    console.log('order delete', res)
   }
 
   handleFormChange =(event) => {
@@ -146,21 +139,25 @@ let newlyRemoved
       <h1>Update/Delete Existing Order Form</h1>
       <p>Step 1: Please enter the order ID and click submit.</p>
       <Form type='Order' id={this.state.id} handleFormChange={this.handleFormChange}/>
-      <button className="btn-white" style={{width:150}} type="submit" onClick={this.getOrderId}>submit Order ID</button>
-      <p>Step 2: Please see below for order details. Please add items to your order using the check box and remove using the button.</p>
+      <br></br>
+
       {
         this.state.orders.length ?
         <SingleOrderTable orders={this.state.orders} itemsNotInOrder={this.state.itemsNotInOrder} handleChange={this.handleChange} deleteOrderItem={this.deleteOrderItem} addOrderItem={this.addOrderItem}/> :
-        null
+        <button className="btn-white" style={{width:150}} type="submit" onClick={this.getOrderId}>submit Order ID</button>
       }
-
+      <p>Step 2: Please see above for order details. Please add items to your order using the check box and remove using the 'X' button.</p>
       <div>
       <p>Step 3: Please click submit or delete when you are ready to submit changes to your order.</p>
       <button className="btn-white" style={{width:250}}  onClick = {() => this.submitUpdatedOrder()}>SUBMIT UPDATED ORDER</button>
       <button className="btn-red" onClick = {() => this.submitDeleteOrder()}>DELETE ENTIRE ORDER</button>
       </div>
 
-      {this.state.orderupdated.id? <Confirmation action='updated' orderId={this.state.orderupdated.id}/> : null}
+      {this.state.orderupdated.id? <Link to="/"><Confirmation action='updated' orderId={this.state.orderupdated.id}/></Link> : null}
+
+      {this.state.deleted? <Link to="/"><Confirmation action='deleted' orderId={this.state.id}/></Link> :null}
+      <br></br>
+      <Link to="/"><button className="btn-white" style={{width:250}}>GO BACK TO HOMEPAGE >></button></Link>
       </div>
       </div>
     )

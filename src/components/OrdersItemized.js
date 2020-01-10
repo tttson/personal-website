@@ -2,19 +2,19 @@ import React, { Component } from 'react'
 import {Link} from 'react-router-dom'
 import axios from 'axios'
 
-class AllProducts extends Component {
+class OrdersItemized extends Component {
   constructor (props){
     super(props)
     this.state = {
-      products: []
+      orders: []
     }
   }
   async componentDidMount() {
     try {
-      const res = await axios.get('/api/products')
+      const res = await axios.get('/api/orders')
       const all =  res.data
       this.setState({
-        products: all.products
+        orders: all.orders
       })
     } catch (err){
     console.log('Something went wrong in getting all orders!', err)
@@ -25,18 +25,20 @@ class AllProducts extends Component {
     return(
       <div id="container">
         <div className="all-products">
-        <h1>Product Catalog</h1>
+        <h1>Order Detail Page</h1>
         <table>
             <tbody>
               <tr>
-                <th>Product Name</th>
-                <th>Product ID</th>
+                <th>Order ID</th>
+                <th>Item ID</th>
+                <th>Item Name</th>
               </tr>
                 {
-                this.state.products.map(item=>(
+                this.state.orders.map(order=>(
                   <tr>
-                    <td>{item.id}</td>
-                    <td>{item.name}</td>
+                    <td>{order.order_id}</td>
+                    <td>{order.item_id}</td>
+                    <td>{order.item_name}</td>
                   </tr>))
                 }
             </tbody>
@@ -49,4 +51,4 @@ class AllProducts extends Component {
 }
 
 
-export default AllProducts
+export default OrdersItemized
