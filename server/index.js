@@ -4,7 +4,6 @@ const bodyparser = require('body-parser')
 const cors = require('cors')
 const errorhandler = require('errorhandler')
 const PORT = 3000
-
 const app = express()
 
 // body parsing middleware
