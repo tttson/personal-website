@@ -69,14 +69,14 @@ CREATE TABLE order_items (
 ## User flow
 - read, create, update, and delete orders
 - once customer rep is on the landing page, he/she will have access to the table of current orders
--UPDATE: if he/she needs to update orders, the navigation bar hosts the link to update orders. Once on the update order page, he/she enters valid order ID to get the order in database. Single order is returned if the order ID exists. User can update order by removing something from the exisiting order or add an item that  is not currently in the order. Units are ignored for this exercise. Once updates are made, he/she can submit the changes to be made in the database.
-* would be good to have a column for quantity in the order items table so multiple of the same items
-* would be good to include error message stating invalid order ID in the future
-* would be good to be able to enter multiple order IDs to return specific orders in one shot
--DELETE: if he/she needs to delete an item from the database, he/she can navigate to the update orders page where they can enter the order ID and click  'delete entire  order' or remove a single item from the order.
-CREATE: if he/she needs to create orders, the navigation bar hosts the link to create orders. Once on the create order page, he/she enters valid user ID to get the user in database. Once user ID is entered, a items are selected via the checkbox. When ready, he/she can submit the new order and the order table and the order items table will be updated.
-READ: Product tables, Itemized order tables, Orders by Customer ID table, Users tables are available
-* would be good to have filter abilities on the UI
+- UPDATE: if he/she needs to update orders, the navigation bar hosts the link to update orders. Once on the update order page, he/she enters valid order ID to get the order in database. Single order is returned if the order ID exists. User can update order by removing something from the exisiting order or add an item that  is not currently in the order. Units are ignored for this exercise. Once updates are made, he/she can submit the changes to be made in the database.
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* would be good to have a column for quantity in the order items table so multiple of the same items
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* would be good to include error message stating invalid order ID in the future
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* would be good to be able to enter multiple order IDs to return specific orders in one shot
+- DELETE: if he/she needs to delete an item from the database, he/she can navigate to the update orders page where they can enter the order ID and click  'delete entire  order' or remove a single item from the order.
+- CREATE: if he/she needs to create orders, the navigation bar hosts the link to create orders. Once on the create order page, he/she enters valid user ID to get the user in database. Once user ID is entered, a items are selected via the checkbox. When ready, he/she can submit the new order and the order table and the order items table will be updated.
+- READ: Product tables, Itemized order tables, Orders by Customer ID table, Users tables are available
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* would be good to have filter abilities on the UI
 
 ## File directories
 - Public folder: static files, images, and bundle.js
