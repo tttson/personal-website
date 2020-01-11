@@ -81,10 +81,10 @@ CREATE TABLE order_items (
 - src folder: index.js, root App component, all components
 
 ## Additional features /enhancements to be added in future:
-- Front end:
+Front end:
 * 404 page not found component
 * most frequently ordered items
-- Back end:
+Back end:
 * add quantity column to order items table
 * add address column to users table
 * more efficient querying in deleting multiple of items in the order
