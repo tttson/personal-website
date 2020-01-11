@@ -55,12 +55,12 @@ CREATE TABLE order_items (
 * '/api/customers' : gets all users info, id and name
 * '/api/orders/:orderID' : gets single order and order details by order ID
 * Google geocode api route
-- POST
+POST
 * '/api/orders' : posts newly created order and adds to database
 *
-- PUT
+PUT
 * '/api/orders/:orderID' : adds/removes items to existing orders on the order_items table
-- DELETE
+DELETE
 *'/api/orders/:orderID' : deletes entire order by order ID
 
 ## User flow
@@ -71,8 +71,8 @@ CREATE TABLE order_items (
 * would be good to include error message stating invalid order ID in the future
 * would be good to be able to enter multiple order IDs to return specific orders in one shot
 -DELETE: if he/she needs to delete an item from the database, he/she can navigate to the update orders page where they can enter the order ID and click  'delete entire  order' or remove a single item from the order.
--CREATE: if he/she needs to create orders, the navigation bar hosts the link to create orders. Once on the create order page, he/she enters valid user ID to get the user in database. Once user ID is entered, a items are selected via the checkbox. When ready, he/she can submit the new order and the order table and the order items table will be updated.
--READ: Product tables, Itemized order tables, Orders by Customer ID table, Users tables are available
+CREATE: if he/she needs to create orders, the navigation bar hosts the link to create orders. Once on the create order page, he/she enters valid user ID to get the user in database. Once user ID is entered, a items are selected via the checkbox. When ready, he/she can submit the new order and the order table and the order items table will be updated.
+READ: Product tables, Itemized order tables, Orders by Customer ID table, Users tables are available
 * would be good to have filter abilities on the UI
 
 ## File directories
