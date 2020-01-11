@@ -2,6 +2,7 @@
 
 ## Getting Started
 1. To view your local version of this project, please **npm install**, then **npm run start**
+2. Need to run seed file by executing `npm run seed`
 
 Packages installed:
 * axios - promise based HTTP client for the browser and node.js
@@ -17,7 +18,7 @@ Packages installed:
 * errorhandler - error handler middleware for development
 * webpack - bundles and compresses files, outputs bundle.js
 
-2. Need to run seed file by executing `npm run seed`
+
 
 
 ## Database Tables - given schema:
@@ -48,19 +49,21 @@ CREATE TABLE order_items (
 
 
 ## API routes used
-- GET
-* '/api/products' : gets all items from the items table
-* '/api/customers/orders' : gets all users and their associated orders
-* '/api/orders' : gets itemized orders without user data
-* '/api/customers' : gets all users info, id and name
-* '/api/orders/:orderID' : gets single order and order details by order ID
+-GET
+*'/api/products' : gets all items from the items table
+*'/api/customers/orders' : gets all users and their associated orders
+*'/api/orders' : gets itemized orders without user data
+*'/api/customers' : gets all users info, id and name
+*'/api/orders/:orderID' : gets single order and order details by order ID
 * Google geocode api route
-POST
-* '/api/orders' : posts newly created order and adds to database
-*
-PUT
-* '/api/orders/:orderID' : adds/removes items to existing orders on the order_items table
-DELETE
+
+-POST
+*'/api/orders' : posts newly created order and adds to database
+
+-PUT
+*'/api/orders/:orderID' : adds/removes items to existing orders on the order_items table
+
+-DELETE
 *'/api/orders/:orderID' : deletes entire order by order ID
 
 ## User flow
