@@ -5,7 +5,6 @@ const SingleOrderRow = (props) => {
   const eaOrder = props.rows
   const deleteOrderItem = props.deleteOrderItem
   const handleChange = props.handleChange
-console.log('from Single Order Rows', props)
   return  (
     <tr>
       <td>{eaOrder.rowId}</td>

@@ -17,7 +17,7 @@ class AllProducts extends Component {
         products: all.products
       })
     } catch (err){
-    console.log('Something went wrong in getting all orders!', err)
+    console.log('Something went wrong in getting all products!', err)
     }
   }
 

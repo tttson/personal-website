@@ -2,13 +2,11 @@ import React, {Component} from 'react'
 import SingleOrderRow from './SingleOrderRow'
 
 const SingleOrderTable = (props) => {
-  // console.log('single order table', props)
     const singleorder = props.orders
     const deleteOrderItem = props.deleteOrderItem
     const itemsNotInOrder = props.itemsNotInOrder
     const handleChange = props.handleChange
     let combined = singleorder.concat(itemsNotInOrder)
-    console.log('single order table', props)
     return (
       <div>
         <div>

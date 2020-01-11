@@ -1,8 +1,7 @@
-import React, {Component} from 'react'
+import React from 'react'
 import OrderRow from './OrderRow'
 
 const AllOrdersTable = (props) => {
-  console.log('allorders', props)
     const allorders = props.orders
     const selectOrder = props.selectOrder
     return (
@@ -20,7 +19,7 @@ const AllOrdersTable = (props) => {
               ))
               }
           </tbody>
-        </table>
+      </table>
     )
 }
 

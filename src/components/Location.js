@@ -22,15 +22,12 @@ class Location extends Component {
 
   handleSubmit = async (event) => {
     event.preventDefault()
-    console.log('what in my state',this.state)
     const res = await axios.get('https://maps.googleapis.com/maps/api/geocode/json', {
       params: {
         address: this.state.address,
         key: process.env.GOOGLE_API_KEY
       }
     })
-    console.log('got address', res.data.results[0].formatted_address)
-    console.log('got geocode', res.data.results[0].geometry.location)
     this.setState({
       formattedAddress: res.data.results[0].formatted_address,
       geocode: res.data.results[0].geometry.location,
@@ -52,7 +49,7 @@ class Location extends Component {
           <form onSubmit={this.handleSubmit}>
             <label htmlFor="address">Enter your address</label>
             <input style={{width:300}} type="text" name="address" onChange={this.handleFormChange}/>
-            <button type='submit'>Submit</button>
+            <button type='submit' disabled={!this.state.address}>Submit</button>
           </form>
         </div>
         <Link to="/"><button className="btn-white" style={{width:250}}>GO BACK TO HOMEPAGE >></button></Link>

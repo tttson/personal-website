@@ -48,7 +48,6 @@ class UpdateOrders extends Component {
         [name]: !prevState.checkboxes[name]
       }
     }))
-    console.log('checkbox changes', this.state.checkboxes)
   }
 
 
@@ -70,7 +69,6 @@ class UpdateOrders extends Component {
       orders: allOrders.orders,
       itemsNotInOrder: filtered
     })
-    console.log('id set to state', this.state)
   }
 
   counter = () => {
@@ -83,7 +81,6 @@ class UpdateOrders extends Component {
       orders: this.state.orders.filter(item => item.rowId !== rowId),
       removed: [...this.state.removed, itemId]
     })
-    console.log('in removed:', this.state.removed)
   }
 
 
@@ -102,7 +99,6 @@ class UpdateOrders extends Component {
     .filter(checkbox => this.state.checkboxes[checkbox])
     .forEach(checkbox => {
       orderitems.push(itemID[checkbox])
-      console.log(orderitems, 'in cart')
     })
     let newlyRemoved
     if (this.state.removed.length > 0) {
@@ -113,7 +109,6 @@ class UpdateOrders extends Component {
     this.setState({
       orderupdated: res.data
     })
-    console.log('SUCCESS WE ADDED IN PUT ROUTE', this.state.orderupdated)
   }
 
   submitDeleteOrder = async ()  => {
@@ -123,7 +118,6 @@ class UpdateOrders extends Component {
       orders: [],
       deleted: true
     })
-    console.log('order delete', res)
   }
 
   handleFormChange =(event) => {

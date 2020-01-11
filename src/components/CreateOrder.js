@@ -68,12 +68,9 @@ class CreateOrder extends Component {
     .filter(checkbox => this.state.checkboxes[checkbox])
     .forEach(checkbox => {
       orderitems.push(itemID[checkbox])
-      console.log(orderitems, 'in cart')
     })
     const info = { items: orderitems, userid: this.state.id}
-    console.log('being sent to backend', info)
     let res = await axios.post('/api/orders', info)
-    console.log('res from  post route', res.data)
     this.setState({
       id: "",
       ordercreated: res.data

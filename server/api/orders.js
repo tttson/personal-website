@@ -2,6 +2,8 @@ const router = require('express').Router()
 const sqlite3 = require('sqlite3')
 const db = new sqlite3.Database('./inhome.db')
 
+
+//get all orders
 router.get('/', (req, res, next)=> {
   db.all('SELECT order_id, item_id, items.name AS item_name FROM order_items JOIN items ON items.id = order_items.item_id',
   (error, orders) => {
@@ -13,8 +15,9 @@ router.get('/', (req, res, next)=> {
   })
 })
 
+//get single order by order ID
 router.get('/:orderID', (req,res,next)=>{
-  //lists out all the item names in order
+  //lists out all the items in order
   const orderID = req.params.orderID
   db.all('SELECT order_id, item_id, items.name AS item_name FROM order_items JOIN items ON items.id = order_items.item_id WHERE order_id = $orderID', {
     $orderID : orderID
@@ -28,6 +31,8 @@ router.get('/:orderID', (req,res,next)=>{
   })
 })
 
+
+//create new order
 router.post('/', async (req,res, next) => {
   //helper function to resolve promises so we can check if user id is valid
   db.getAsync = function (sql) {
@@ -62,7 +67,6 @@ router.post('/', async (req,res, next) => {
     return
   }
 
-  console.log('validUserId', validUserId)
   let sql = `INSERT INTO orders (user_id) VALUES ($validUserId)`
   let values = { $validUserId : validUserId}
   //insert into the orders table to get new order id
@@ -74,7 +78,6 @@ router.post('/', async (req,res, next) => {
       let placeholders = items.map((item)=> '(?,?)').join(',')
       let itemsIdordersId = items.map((itemid)=> `(${orderId},${itemid})`).join(', ')
       let sql2 = 'INSERT INTO order_items (order_id, item_id) VALUES ' + itemsIdordersId
-      console.log(sql2, ' using order id', orderId)
       db.run(sql2, function(err, result){
         if(err){
           return console.error(err.message)
@@ -86,15 +89,14 @@ router.post('/', async (req,res, next) => {
   })
 })
 
+//add and/or remove single items in the order
 router.put('/:orderID', (req, res, next)=> {
-console.log('put route is hitting!!!', req.body, 'got order id', req.params.orderID)
 let addList = req.body.add
 let removeList = req.body.remove
 let orderID = req.params.orderID
 if(addList.length > 0) {
   let itemsIdordersId = addList.map((itemid)=> `(${orderID},${itemid})`).join(', ')
     let sql1 = 'INSERT INTO order_items (order_id, item_id) VALUES ' + itemsIdordersId
-    console.log(sql1, ' using order id', orderID)
     db.run(sql1, function(err, result){
       if(err){
         return console.error(err.message)

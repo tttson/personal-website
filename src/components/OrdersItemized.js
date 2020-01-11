@@ -17,7 +17,7 @@ class OrdersItemized extends Component {
         orders: all.orders
       })
     } catch (err){
-    console.log('Something went wrong in getting all orders!', err)
+    console.log('Something went wrong in getting all itemized orders!', err)
     }
   }
 

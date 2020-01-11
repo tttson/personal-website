@@ -7,7 +7,6 @@ const QuickAccess = (props) => {
   const imgLink = props.img
   const ttl = props.ttl
   const userNum = props.userNum
-  console.log('in quickaccess', props)
   return (
       <div>
         <Link to={`/${id}`}><img src={imgLink}/></Link>

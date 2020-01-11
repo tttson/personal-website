@@ -36467,7 +36467,6 @@ var QuickAccess = function QuickAccess(props) {
   var imgLink = props.img;
   var ttl = props.ttl;
   var userNum = props.userNum;
-  console.log('in quickaccess', props);
   return _react2.default.createElement(
     'div',
     null,
@@ -37339,7 +37338,6 @@ var _OrderRow2 = _interopRequireDefault(_OrderRow);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var AllOrdersTable = function AllOrdersTable(props) {
-  console.log('allorders', props);
   var allorders = props.orders;
   var selectOrder = props.selectOrder;
   return _react2.default.createElement(
@@ -37576,7 +37574,6 @@ var UpdateOrders = function (_Component) {
           checkboxes: _extends({}, prevState.checkboxes, _defineProperty({}, name, !prevState.checkboxes[name]))
         };
       });
-      console.log('checkbox changes', _this.state.checkboxes);
     };
 
     _this.getOrderId = function () {
@@ -37608,9 +37605,8 @@ var UpdateOrders = function (_Component) {
                   orders: allOrders.orders,
                   itemsNotInOrder: filtered
                 });
-                console.log('id set to state', _this.state);
 
-              case 11:
+              case 10:
               case 'end':
                 return _context.stop();
             }
@@ -37643,9 +37639,6 @@ var UpdateOrders = function (_Component) {
                 });
 
               case 2:
-                console.log('in removed:', _this.state.removed);
-
-              case 3:
               case 'end':
                 return _context2.stop();
             }
@@ -37679,7 +37672,6 @@ var UpdateOrders = function (_Component) {
                 return _this.state.checkboxes[checkbox];
               }).forEach(function (checkbox) {
                 orderitems.push(itemID[checkbox]);
-                console.log(orderitems, 'in cart');
               });
               newlyRemoved = void 0;
 
@@ -37696,9 +37688,8 @@ var UpdateOrders = function (_Component) {
               _this.setState({
                 orderupdated: res.data
               });
-              console.log('SUCCESS WE ADDED IN PUT ROUTE', _this.state.orderupdated);
 
-            case 11:
+            case 10:
             case 'end':
               return _context3.stop();
           }
@@ -37722,9 +37713,8 @@ var UpdateOrders = function (_Component) {
                 orders: [],
                 deleted: true
               });
-              console.log('order delete', res);
 
-            case 6:
+            case 5:
             case 'end':
               return _context4.stop();
           }
@@ -37860,13 +37850,11 @@ var _SingleOrderRow2 = _interopRequireDefault(_SingleOrderRow);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var SingleOrderTable = function SingleOrderTable(props) {
-  // console.log('single order table', props)
   var singleorder = props.orders;
   var deleteOrderItem = props.deleteOrderItem;
   var itemsNotInOrder = props.itemsNotInOrder;
   var handleChange = props.handleChange;
   var combined = singleorder.concat(itemsNotInOrder);
-  console.log('single order table', props);
   return _react2.default.createElement(
     'div',
     null,
@@ -37950,7 +37938,6 @@ var SingleOrderRow = function SingleOrderRow(props) {
   var eaOrder = props.rows;
   var deleteOrderItem = props.deleteOrderItem;
   var handleChange = props.handleChange;
-  console.log('from Single Order Rows', props);
   return _react2.default.createElement(
     'tr',
     null,
@@ -38111,25 +38098,21 @@ var CreateOrder = function (_Component) {
                   return _this.state.checkboxes[checkbox];
                 }).forEach(function (checkbox) {
                   orderitems.push(itemID[checkbox]);
-                  console.log(orderitems, 'in cart');
                 });
                 info = { items: orderitems, userid: _this.state.id };
-
-                console.log('being sent to backend', info);
-                _context.next = 7;
+                _context.next = 6;
                 return _axios2.default.post('/api/orders', info);
 
-              case 7:
+              case 6:
                 res = _context.sent;
 
-                console.log('res from  post route', res.data);
                 _this.setState({
                   id: "",
                   ordercreated: res.data
                 });
                 _this.deselectAll();
 
-              case 11:
+              case 9:
               case 'end':
                 return _context.stop();
             }
@@ -38331,7 +38314,7 @@ var AllProducts = function (_Component) {
                 _context.prev = 8;
                 _context.t0 = _context['catch'](0);
 
-                console.log('Something went wrong in getting all orders!', _context.t0);
+                console.log('Something went wrong in getting all products!', _context.t0);
 
               case 11:
               case 'end':
@@ -38653,7 +38636,7 @@ var OrdersItemized = function (_Component) {
                 _context.prev = 8;
                 _context.t0 = _context['catch'](0);
 
-                console.log('Something went wrong in getting all orders!', _context.t0);
+                console.log('Something went wrong in getting all itemized orders!', _context.t0);
 
               case 11:
               case 'end':
@@ -38811,8 +38794,7 @@ var Location = function (_Component) {
             switch (_context.prev = _context.next) {
               case 0:
                 event.preventDefault();
-                console.log('what in my state', _this.state);
-                _context.next = 4;
+                _context.next = 3;
                 return _axios2.default.get('https://maps.googleapis.com/maps/api/geocode/json', {
                   params: {
                     address: _this.state.address,
@@ -38820,18 +38802,16 @@ var Location = function (_Component) {
                   }
                 });
 
-              case 4:
+              case 3:
                 res = _context.sent;
 
-                console.log('got address', res.data.results[0].formatted_address);
-                console.log('got geocode', res.data.results[0].geometry.location);
                 _this.setState({
                   formattedAddress: res.data.results[0].formatted_address,
                   geocode: res.data.results[0].geometry.location,
                   address: ''
                 });
 
-              case 8:
+              case 5:
               case 'end':
                 return _context.stop();
             }
@@ -38879,7 +38859,7 @@ var Location = function (_Component) {
               _react2.default.createElement('input', { style: { width: 300 }, type: 'text', name: 'address', onChange: this.handleFormChange }),
               _react2.default.createElement(
                 'button',
-                { type: 'submit' },
+                { type: 'submit', disabled: !this.state.address },
                 'Submit'
               )
             )
