@@ -34,6 +34,7 @@
     "babel-preset-stage-2": "^6.24.1",
     "errorhandler": "^1.5.0",
     "nodemon": "^1.19.0",
+    "prettier": "1.19.1",
     "webpack": "^3.5.5"
   }
 }

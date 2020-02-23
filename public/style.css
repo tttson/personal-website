@@ -1,6 +1,6 @@
-* {
+/* * {
   box-sizing: border-box;
-}
+} */
 
 body{
   margin: 0
@@ -22,19 +22,17 @@ body{
 
 #navbar ul {
   height: 60%;
-  width: 100%;
-  margin: 0;
   list-style-type: none;
   /*FLEX STUFF*/
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  align-items: left;
+  padding: 25px;
 }
 
 #navbar img {
   width: 80%;
-  justify-content: flex-start;
+  margin-left: 10%;
 }
 
 .main {

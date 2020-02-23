@@ -37449,14 +37449,10 @@ var Navbar = function Navbar() {
   return _react2.default.createElement(
     'div',
     { id: 'navbar' },
+    _react2.default.createElement('img', { src: '/logo.png', alt: 'logo' }),
     _react2.default.createElement(
       'ul',
       null,
-      _react2.default.createElement(
-        'li',
-        null,
-        _react2.default.createElement('img', { src: '/logo.png', alt: 'logo' })
-      ),
       _react2.default.createElement(
         _reactRouterDom.Link,
         { to: '/create' },
@@ -37619,11 +37615,6 @@ var UpdateOrders = function (_Component) {
       };
     }();
 
-    _this.counter = function () {
-      var lastNum = _this.state.orders[_this.state.orders.length - 1].rowId;
-      return lastNum;
-    };
-
     _this.deleteOrderItem = function () {
       var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(rowId, itemId) {
         return regeneratorRuntime.wrap(function _callee2$(_context2) {
@@ -37741,6 +37732,11 @@ var UpdateOrders = function (_Component) {
   }
   //checkbox handleChange
 
+
+  // counter = () => {
+  //   let lastNum = this.state.orders[this.state.orders.length-1].rowId
+  //  return lastNum
+  // }
 
   _createClass(UpdateOrders, [{
     key: 'render',
