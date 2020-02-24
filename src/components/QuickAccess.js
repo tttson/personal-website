@@ -8,11 +8,11 @@ const QuickAccess = (props) => {
   const ttl = props.ttl
   const userNum = props.userNum
   return (
-      <div>
+    <div id={id}>
         <Link to={`/${id}`}><img src={imgLink}/></Link>
         <p>{text}</p>
-        {text === 'Total Orders'? ttl : null}
-        {text === 'Total Customers'? userNum : null}
+        {text === 'Total Orders'? <p>{ttl}</p> : null}
+        {text === 'Total Customers'? <p>{userNum}</p> : null}
       </div>
     )
   }

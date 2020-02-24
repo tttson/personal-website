@@ -35,7 +35,7 @@ class Landing extends Component {
           <section className='quickaccess'>
             {
               content.map((block, i) => (
-              <div id={block.id}><QuickAccess id={block.id} img={block.img} text={block.text} userNum={this.state.users.length} ttl={this.state.orders.length}/></div>
+              <QuickAccess id={block.id} img={block.img} text={block.text} userNum={this.state.users.length} ttl={this.state.orders.length}/>
               ))
             }
           </section>
