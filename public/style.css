@@ -24,7 +24,7 @@ body{
 }
 
 #navbar ul {
-  height: 60%;
+  height: 50%;
   list-style-type: none;
   display: flex;
   flex-direction: column;
@@ -95,7 +95,7 @@ body{
 }
 
 .quickaccess img {
-  width: 50%;
+  width: 30%;
   align-self: center;
   padding-top: 15px;
 }

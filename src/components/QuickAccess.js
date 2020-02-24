@@ -1,5 +1,6 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
+import { jsx, css } from '@emotion/core'
 
 const QuickAccess = (props) => {
   const text = props.text
@@ -8,7 +9,9 @@ const QuickAccess = (props) => {
   const ttl = props.ttl
   const userNum = props.userNum
   return (
-    <div id={id}>
+    <div id={id} css={css`
+    background-color: red;
+    `}>
         <Link to={`/${id}`}><img src={imgLink}/></Link>
         <p>{text}</p>
         {text === 'Total Orders'? <p>{ttl}</p> : null}
