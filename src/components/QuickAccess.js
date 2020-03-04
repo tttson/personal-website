@@ -10,7 +10,7 @@ const QuickAccess = (props) => {
   const userNum = props.userNum
   return (
     <div id={id} css={css`
-    background-color: red;
+    background-color: hotpink;
     `}>
         <Link to={`/${id}`}><img src={imgLink}/></Link>
         <p>{text}</p>

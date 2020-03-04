@@ -4,6 +4,7 @@ import Form from "./Form";
 import SingleOrderTable from "./SingleOrderTable";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import AllOrdersTable from './AllOrdersTable'
 
 const PRODUCTS = [
   "Banana",
@@ -204,7 +205,9 @@ class UpdateOrders extends Component {
           {this.state.deleted ? (
             <Link to="/">
               <Confirmation action="deleted" orderId={this.state.id} />
+              <AllOrdersTable/>
             </Link>
+
           ) : null}
           <br></br>
           <Link to="/">
