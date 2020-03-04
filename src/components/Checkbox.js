@@ -1,4 +1,4 @@
-import React from "react"
+import React from "react";
 
 const Checkbox = ({ label, isSelected, onCheckboxChange }) => (
   <div>
@@ -13,6 +13,6 @@ const Checkbox = ({ label, isSelected, onCheckboxChange }) => (
     </label>
     {label}
   </div>
-)
+);
 
-export default Checkbox
+export default Checkbox;
