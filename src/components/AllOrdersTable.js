@@ -14,7 +14,6 @@ const AllOrdersTable = props => {
       .get("/api/customers/orders")
       .then(res => {
         setOrders(res.data.orders);
-        console.log("you got it", orders);
         setLoad(true);
       })
       .catch(err => {

@@ -1,4 +1,6 @@
 {
   "presets": ["react", "env", "stage-2"],
-  "plugins": ["emotion"]
+  "plugins": [
+    ["emotion", {"sourceMap": true}]
+  ]
 }

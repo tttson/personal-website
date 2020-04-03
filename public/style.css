@@ -100,7 +100,7 @@ body{
   padding-top: 15px;
 }
 
-#users{
+/* #users{
   height: 20vh;
   width: 30%;
   background-color: white;
@@ -109,9 +109,9 @@ body{
   box-shadow: 5px 5px 5px 0 rgba(46, 74, 117, 0.5);
   text-align: center;
   margin: 20px;
-}
+} */
 
-#orders{
+/* #orders{
   height: 20vh;
   width: 30%;
   background-color: white;
@@ -120,9 +120,9 @@ body{
   box-shadow: 5px 5px 5px 0 rgba(46, 74, 117, 0.5);
   text-align: center;
   margin: 20px;
-}
+} */
 
-#catalog{
+/* #catalog{
   height: 20vh;
   width: 30%;
   background-color: white;
@@ -131,9 +131,9 @@ body{
   box-shadow: 5px 5px 5px 0 rgba(46, 74, 117, 0.5);
   text-align: center;
   margin: 20px;
-}
+} */
 
-#location {
+/* #location {
   height: 20vh;
   width: 30%;
   background-color: white;
@@ -142,7 +142,7 @@ body{
   box-shadow: 5px 5px 5px 0 rgba(46, 74, 117, 0.5);
   text-align: center;
   margin: 20px;
-}
+} */
 
 #users:hover, #orders:hover, #catalog:hover, #freq:hover, #location:hover {
   color: rgb(0, 0, 0);

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { Map, GoogleApiWrapper, Marker } from "google-maps-react";
 import axios from "axios";
-require("../../secrets");
+// require("../../secrets");
 
 class Location extends Component {
   constructor(props) {

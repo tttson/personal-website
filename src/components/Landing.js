@@ -4,6 +4,7 @@ import axios from "axios";
 // import UserOrder from './UserOrder'
 import AllOrdersTable from "./AllOrdersTable";
 
+
 class Landing extends Component {
   constructor(props) {
     super(props);
@@ -32,12 +33,13 @@ class Landing extends Component {
     }
   }
 
+
   render() {
     let content = this.state.content;
     return (
       <div className="main">
         <section className="quickaccess">
-          {content.map((block, i) => (
+          {content.map((block) => (
             <QuickAccess
               key={block.id}
               id={block.id}
